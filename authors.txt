@@ -1,8 +1,0 @@
-
-Membres D'équipe :
-
-Nom      Prénoms    N_Etudiant ID_Gitlab
-----------------------------------------
-Benamara Abdelkader 21808027   benamara
-Aknoun   Mehdi      21970844   aknoun
-Djelid   Aymen      21810771   djelid
