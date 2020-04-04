@@ -8,12 +8,10 @@
 
 int main()
 {
-
     const char *fichier = "../test.txt";
     char buff[MAXLEN];
     //int fd = open("../teest", O_RDWR);
     char tab[MAXLEN]="aymen";
-
     set_tags("../test.txt",tab,"data");
     /*  if (setxattr("../teest", "user.tag4", tab, sizeof(tab), 0) > -1)
     {
@@ -32,8 +30,6 @@ int main()
     {
         perror(" err list");
     }
-
-    get_tags("../test.txt","data")
-
+    get_tags("../test.txt","data");
     return 0;
 }
