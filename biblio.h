@@ -6,10 +6,32 @@
 #define SYSTPROJET_BIBLIO_H
 #define MAXLEN 1024
 
+///  ------------------- project structure ----------------------
+typedef struct {
+    char tag[30];
+    struct elem *suivant;
+}Token;
 
-int isExist(char data[MAXLEN],char *tagName);
-void set_tags(char *Path,char data[MAXLEN],char *tagName);
-void get_tags(char *Path,char *tagName);
+typedef struct{
+    Token *sommet;
+    int NbTags;
+}Tags;
+
+
+
+
+/// -------------------------------------------------------------
+
+int isExistTag(Tags tags,char *tagName);
+char *TagsToBuf(Tags *tag);
+void init_tags(Tags *tags,char buf[MAXLEN]);
+void add(Tags *tags,char *tagName);
+void set_tags(char *Path,char data[MAXLEN],char *tagName,int replace);
+void get_tags(Tags *tags,char *Path,char *tagName);
+void ListOfTags(Tags *tableau,char buff[MAXLEN],int size);
+int findCateg(Tags *tags,char *tagName);
+void addCategorie(char *Path,char *tagName);
+void addTagInCategorie(char *Path,char *category,char *tagName);
 
 
 
