@@ -30,7 +30,7 @@ void deletTag(Tags *tags,char *tagName);
 void set_tags(char *Path,char data[MAXLEN],char *tagName,int replace);
 void get_tags(Tags *tags,char *Path,char *tagName);
 void ListOfTags(Tags *tableau,char buff[MAXLEN],int size);
-int findCateg(Tags *tags,char *tagName);
+int findInList(Tags *tags,char *tagName);
 void addCategorie(char *Path,char *tagName);
 void addTagInCategorie(char *Path,char *category,char *tagName);
 void supprimerCategorie(char *Path,char *category);

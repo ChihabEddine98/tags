@@ -119,13 +119,13 @@ void ListOfTags(Tags *tableau,char buff[MAXLEN],int size){
     while(index<(size-1)){
         char *mot=&buff[index];
         char *m=&mot[5];
-        printf("mot =%s and %d\n",m,strlen(m));
+       // printf("mot =%s and %d\n",m,strlen(m));
         add(tableau,m);
         index+= strlen(m)+6;
     }
 
 }
-int findCateg(Tags *tags,char *tagName){
+int findInList(Tags *tags,char *tagName){
     Token *token=tags->sommet;
     while(token!=NULL){
         if(strcmp(token->tag,tagName)==0) return 1;
@@ -143,7 +143,7 @@ void addCategorie(char *Path,char *tagName){
     if(size>0){
         ListOfTags(list,buff,size);
     }
-    if(findCateg(list,tagName)){
+    if(findInList(list,tagName)){
         printf("Error , category exist");
     }
     else{// new categorie
@@ -173,16 +173,18 @@ void addTagInCategorie(char *Path,char *category,char *tagName){
     if(size>0){
         ListOfTags(list,buff,size);
     }
-    if(findCateg(list,category)){
+    if(findInList(list,category)){
         Tags *listOfTags=malloc(sizeof(Tags));
         listOfTags->NbTags=0;
         listOfTags->sommet=NULL;
         get_tags(listOfTags,Path,category);
-        add(listOfTags,tagName);   /// add the tag to the list of tags
-        char *buffer;
-        buffer=TagsToBuf(listOfTags);
-        printf("%s\n",buffer);
-        set_tags(Path,buffer,category,1);
+        if(findInList(listOfTags,tagName)==0) {
+            add(listOfTags, tagName);   /// add the tag to the list of tags
+            char *buffer;
+            buffer = TagsToBuf(listOfTags);
+            printf("%s\n", buffer);
+            set_tags(Path, buffer, category, 1);
+        } else printf("\ntag exist\n");
     }
     else{
         printf("Error , category doesn't exist");
@@ -200,7 +202,7 @@ void removeTagCategory(char *Path,char *category,char *tagName){
     if(size>0){
         ListOfTags(list,buff,size);
     }
-    if(findCateg(list,category)){
+    if(findInList(list,category)){
         Tags *listOfTags=malloc(sizeof(Tags));
         listOfTags->NbTags=0;
         listOfTags->sommet=NULL;
