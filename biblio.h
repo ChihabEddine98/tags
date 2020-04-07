@@ -35,8 +35,8 @@ void addCategorie(char *Path,char *tagName);
 void addTagInCategorie(char *Path,char *category,char *tagName);
 void supprimerCategorie(char *Path,char *category);
 void removeTagCategory(char *Path,char *category,char *tagName);
-
-
+void afficher(Tags *tags);
+void listTag(char *Path);
 
 
 #endif //SYSTPROJET_BIBLIO_H

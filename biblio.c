@@ -26,7 +26,6 @@ int isExistTag(Tags tags,char *tagName){
 
 
 void set_tags(char *Path,char data[MAXLEN],char *tagName,int replace){
-    int fd = open(Path, O_RDWR);
     char buf[30];
     sprintf(buf,"user.%s",tagName);
     if(replace==0) {
@@ -48,7 +47,7 @@ void set_tags(char *Path,char data[MAXLEN],char *tagName,int replace){
             tab[i]=data[i];
         }
         tab[i]='\0';
-        if (setxattr(Path, buf,tab, sizeof(tab), 0) > -1) {
+        if (setxattr(Path, buf,tab, sizeof(tab), XATTR_REPLACE) > -1) {
             printf("tag modifier\n");
 
         } else {
@@ -109,20 +108,20 @@ void get_tags(Tags *tags,char *Path,char *tagName){
     sprintf(buf,"user.%s",tagName);
     if (getxattr(fichier, buf, buf_Tags, sizeof(buf_Tags)))
     {
-        printf("value of tag %s : %s\n", buf, buf_Tags);
         init_tags(tags,buf_Tags);
     }else{
         printf("Error");
     }
 }
 void ListOfTags(Tags *tableau,char buff[MAXLEN],int size){
-    char *mot;
+
     int index=0;
-    while(index<size){
-        mot=&buff[index];
+    while(index<(size-1)){
+        char *mot=&buff[index];
         char *m=&mot[5];
+        printf("mot =%s and %d\n",m,strlen(m));
         add(tableau,m);
-        index+= sizeof(mot)+2;
+        index+= strlen(m)+6;
     }
 
 }
@@ -217,6 +216,8 @@ void removeTagCategory(char *Path,char *category,char *tagName){
     }
 }
 
+
+
 void supprimerCategorie(char *Path,char *category){
     const char *fichier =Path;
     char buf[30];
@@ -227,6 +228,41 @@ void supprimerCategorie(char *Path,char *category){
 
     } else
         printf("Error ,supprimer Categorie ");
+
+}
+void afficher(Tags *tags){
+
+    Token *token=tags->sommet;
+    while(token!=NULL){
+        printf("  - tag :%s\n",token->tag);
+        token=token->suivant;
+    }
+}
+
+void listTag(char *Path){
+    const char *fichier =Path;
+    char buff[MAXLEN];
+    int size=listxattr(fichier, buff, sizeof(buff));
+    Tags *list=malloc(sizeof(Tags));
+    list->NbTags=0;
+    list->sommet=NULL;
+    if(size>0){
+        ListOfTags(list,buff,size);
+    }
+    Token *token=list->sommet;
+    if(token==NULL){
+        printf("\nList vide \n ");
+        return;
+    }
+    while(token!=NULL){
+        printf(" Categorie :%s\n",token->tag);
+        Tags *listOfTags=malloc(sizeof(Tags));
+        listOfTags->NbTags=0;
+        listOfTags->sommet=NULL;
+        get_tags(listOfTags,Path,token->tag);
+        afficher(listOfTags);
+        token=token->suivant;
+    }
 
 }
 
