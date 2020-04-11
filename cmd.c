@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 #include "cmd.h"
 #include "biblio.h"
 
@@ -54,7 +55,7 @@ static struct argp argp = { options, parse_opt, args_doc, doc };
 int main (int argc, char **argv)
 {
   struct arguments arguments;
-  char catego_tmp[MAX_STRING];
+  char *catego_tmp=malloc((size_t)(MAX_STRING+1));
 
   /* Default values. */
   arguments.add_tag = 0;
@@ -89,14 +90,14 @@ int main (int argc, char **argv)
       else
       {
         printf(" Enter category [default: %s]\n",arguments.add_tag);
-        scanf("%s",&catego_tmp);
+        scanf("%[^'\n']s",catego_tmp);
 
-        if(catego_tmp =='\n')
+        if(strcmp(catego_tmp,"")== 0)
         {
             arguments.add_category=arguments.add_tag;
         } 
         else
-        { 
+        {
           arguments.add_category=catego_tmp;
         }
 
