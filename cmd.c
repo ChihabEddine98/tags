@@ -2,23 +2,70 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "cmd.h"
 
-int main(int argc, char *argv[])
+/* Parse a single option. */
+static error_t parse_opt (int key, char *arg, struct argp_state *state)
 {
-    bool isCaseInsensitive = false;
-    int opt;
-    enum { CHARACTER_MODE, WORD_MODE, LINE_MODE } mode = CHARACTER_MODE;
+  /* Get the input argument from argp_parse, which we
+     know is a pointer to our arguments structure. */
+  struct arguments *arguments = state->input;
 
-    while ((opt = getopt(argc, argv, "ilw")) != -1) {
-        switch (opt) {
-        case 'i': isCaseInsensitive = true; break;
-        case 'l': mode = LINE_MODE;
-                    printf("l yooooho"); break;
-        case 'w': mode = WORD_MODE; break;
-        default:
-            fprintf(stderr, "Usage: %s [-ilw] [file...]\n", argv[0]);
-            exit(EXIT_FAILURE);
-        }
+  switch (key)
+    {
+    case 'q': case 's':
+      arguments->silent = 1;
+      break;
+    case 'v':
+      arguments->verbose = 1;
+      break;
+    case 'o':
+      arguments->output_file = arg;
+      break;
+
+    case ARGP_KEY_ARG:
+      if (state->arg_num >= 2)
+        /* Too many arguments. */
+        argp_usage (state);
+
+      arguments->args[state->arg_num] = arg;
+
+      break;
+
+    case ARGP_KEY_END:
+      if (state->arg_num < 2)
+        /* Not enough arguments. */
+        argp_usage (state);
+      break;
+
+    default:
+      return ARGP_ERR_UNKNOWN;
     }
+  return 0;
+}
 
+/* Our argp parser. */
+static struct argp argp = { options, parse_opt, args_doc, doc };
+
+int main (int argc, char **argv)
+{
+  struct arguments arguments;
+
+  /* Default values. */
+  arguments.silent = 0;
+  arguments.verbose = 0;
+  arguments.output_file = "-";
+
+  /* Parse our arguments; every option seen by parse_opt will
+     be reflected in arguments. */
+  argp_parse (&argp, argc, argv, 0, 0, &arguments);
+
+  printf ("ARG1 = %s\nARG2 = %s\nOUTPUT_FILE = %s\n"
+          "VERBOSE = %s\nSILENT = %s\n",
+          arguments.args[0], arguments.args[1],
+          arguments.output_file,
+          arguments.verbose ? "yes" : "no",
+          arguments.silent ? "yes" : "no");
+
+  exit (0);
 }
