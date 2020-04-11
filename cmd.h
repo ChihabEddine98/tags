@@ -21,6 +21,7 @@ static struct argp_option options[] = {
   {"add",  'a',"TAG", 0  ,  "Add TAG to FILE" },
   {"delete",    'd', "TAG",      0,  "Remove TAG from FILE" },
   {"category",   'c', "CATEGORY",0,      "Add a new category" },
+  {"delete_category",   'x', "CATEGORY",0,      "Remove an existing category" },
   {"output",   'o', "FILE", 0,
    "Output to FILE instead of standard output" },
   { 0 }
@@ -33,6 +34,7 @@ struct arguments
   char *add_tag; 
   char *rm_tag;
   char *add_category;
+  char *rm_category;
   char *output_file;
 };
 
