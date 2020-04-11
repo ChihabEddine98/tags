@@ -9,16 +9,16 @@ const char *argp_program_bug_address =
 
 /* Program documentation. */
 static char doc[] =
-  "Cmd example for tags managing -- a program with options and arguments using argp";
+  "\nCmd example for tags managing -- Manual\n Examples :\n tag -a Red -c Color file.txt\n tag -d Green green_file.txt";
 
 /* A description of the arguments we accept. */
-static char args_doc[] = "ARG1 ARG2";
+static char args_doc[] = "FILE";
 
 /* The options we understand. */
 static struct argp_option options[] = {
-  {"verbose",  'v', 0,      0,  "Produce verbose output" },
-  {"quiet",    'q', 0,      0,  "Don't produce any output" },
-  {"silent",   's', 0,      OPTION_ALIAS },
+  {"add",  'a',"TAG", 0  ,  "Add TAG to FILE" },
+  {"delete",    'd', "TAG",      0,  "Remove TAG from FILE" },
+  {"category",   'c', "CATEGORY",0,      "Add a new category" },
   {"output",   'o', "FILE", 0,
    "Output to FILE instead of standard output" },
   { 0 }
@@ -27,8 +27,10 @@ static struct argp_option options[] = {
 /* Used by main to communicate with parse_opt. */
 struct arguments
 {
-  char *args[2];                /* arg1 & arg2 */
-  int silent, verbose;
+  char *args[1];                /* FILE PATH */
+  char *add_tag; 
+  char *rm_tag;
+  char *add_category;
   char *output_file;
 };
 
