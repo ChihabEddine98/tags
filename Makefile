@@ -22,4 +22,5 @@ clean:
 
 clean_all: clean
 		rm -rf main
+		rm -rf cmd
 		
