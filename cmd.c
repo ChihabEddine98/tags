@@ -14,10 +14,10 @@ static error_t parse_opt (int key, char *arg, struct argp_state *state)
 
   switch (key)
     {
-    case 'a': case 'n':
+    case 'a': 
       arguments->add_tag = arg;
       break;
-    case 'r': case 'd':
+    case 'd':
       arguments->rm_tag = arg;
       break;
     case 'c': case 'g':
@@ -66,10 +66,16 @@ int main (int argc, char **argv)
      be reflected in arguments. */
   argp_parse (&argp, argc, argv, 0, 0, &arguments);
 
-  // Case of tag -d TAG file.txt
+  // Case of tag -d TAG -c CATEGORY file.txt
   if(arguments.rm_tag)
   {
+     // Case ok !
+    if(arguments.add_category)
+    {
+      removeTagCategory(arguments.args[0],arguments.add_category,arguments.rm_tag);
+    }
     
+    listTag(arguments.args[0]);
   }
 
   // Case of tag -a TAG -c CATEGORY file.txt
@@ -98,15 +104,17 @@ int main (int argc, char **argv)
         addTagInCategorie(arguments.args[0],arguments.add_category,arguments.add_tag);
 
       }
+
+      listTag(arguments.args[0]);
       
   }
 
-  printf ("FILE = %s\nADDED_TAG = %s\n"
-          "REMOVED_TAG = %s\nADDED_CATEGORY = %s\n",
-          arguments.args[0],
-          arguments.add_tag,
-          arguments.rm_tag ? arguments.rm_tag:"no_rm",
-          arguments.add_category? arguments.add_category:"no_add_category");
+  // printf ("FILE = %s\nADDED_TAG = %s\n"
+  //         "REMOVED_TAG = %s\nADDED_CATEGORY = %s\n",
+  //         arguments.args[0],
+  //         arguments.add_tag,
+  //         arguments.rm_tag ? arguments.rm_tag:"no_rm",
+  //         arguments.add_category? arguments.add_category:"no_add_category");
 
   exit (0);
 }
