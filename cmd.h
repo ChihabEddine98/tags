@@ -2,6 +2,8 @@
 #define SYSTPROJET_CMD_H
 #include <argp.h>
 
+#define MAX_STRING 25
+
 const char *argp_program_version =
   "tags 1.0";
 const char *argp_program_bug_address =

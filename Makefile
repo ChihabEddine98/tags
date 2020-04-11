@@ -2,8 +2,8 @@ HEADERS = biblio.h
 
 all: main
 
-cmd: cmd.o
-		gcc -o cmd cmd.o
+cmd: cmd.o biblio.o
+		gcc -o cmd cmd.o biblio.o
 
 main:   main.o biblio.o 
 			gcc  -o main    main.o biblio.o 
@@ -11,7 +11,7 @@ main:   main.o biblio.o
 main.o: main.c $(HEADERS)
 			gcc -o main.o -c main.c
 
-cmd.o: cmd.c cmd.h
+cmd.o: cmd.c  $(HEADERS) cmd.h
 			gcc -o cmd.o -c cmd.c
 
 biblio.o: biblio.c 

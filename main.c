@@ -22,14 +22,19 @@ int main()
         perror(" err set");
     }
 */
-    if (listxattr(fichier, buff, sizeof(buff)) > -1)
-    {
-        printf("tag names :%s\n", buff);
-    }
-    else
-    {
-        perror(" err list");
-    }
+    // if (listxattr(fichier, buff, sizeof(buff)) > -1)
+    // {
+    //     printf("tag names :%s\n", buff);
+    // }
+    // else
+    // {
+    //     perror(" err list");
+    // }
+
+    listTag("./test.txt");
+
+
+
     //get_tags("../test.txt","data");
     return 0;
 }

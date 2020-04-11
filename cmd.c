@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "cmd.h"
+#include "biblio.h"
 
 /* Parse a single option. */
 static error_t parse_opt (int key, char *arg, struct argp_state *state)
@@ -53,6 +54,7 @@ static struct argp argp = { options, parse_opt, args_doc, doc };
 int main (int argc, char **argv)
 {
   struct arguments arguments;
+  char catego_tmp[MAX_STRING];
 
   /* Default values. */
   arguments.add_tag = 0;
@@ -67,13 +69,36 @@ int main (int argc, char **argv)
   // Case of tag -d TAG file.txt
   if(arguments.rm_tag)
   {
-
+    
   }
 
   // Case of tag -a TAG -c CATEGORY file.txt
   if(arguments.add_tag)
   {
-    
+      // Case ok !
+      if(arguments.add_category)
+      { 
+        addTagInCategorie(arguments.args[0],arguments.add_category,arguments.add_tag);
+      }
+      else
+      {
+        printf(" Enter category [default: %s]\n",arguments.add_tag);
+        scanf("%s",&catego_tmp);
+
+        if(catego_tmp =='\n')
+        {
+            arguments.add_category=arguments.add_tag;
+        } 
+        else
+        { 
+          arguments.add_category=catego_tmp;
+        }
+
+        addCategorie(arguments.args[0],arguments.add_category);
+        addTagInCategorie(arguments.args[0],arguments.add_category,arguments.add_tag);
+
+      }
+      
   }
 
   printf ("FILE = %s\nADDED_TAG = %s\n"
