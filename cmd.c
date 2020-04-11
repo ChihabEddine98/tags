@@ -55,14 +55,26 @@ int main (int argc, char **argv)
   struct arguments arguments;
 
   /* Default values. */
-  arguments.add_tag = "";
-  arguments.rm_tag = "";
-  arguments.add_category = "";
+  arguments.add_tag = 0;
+  arguments.rm_tag = 0;
+  arguments.add_category = 0;
   arguments.output_file = "-";
 
   /* Parse our arguments; every option seen by parse_opt will
      be reflected in arguments. */
   argp_parse (&argp, argc, argv, 0, 0, &arguments);
+
+  // Case of tag -d TAG file.txt
+  if(arguments.rm_tag)
+  {
+
+  }
+
+  // Case of tag -a TAG -c CATEGORY file.txt
+  if(arguments.add_tag)
+  {
+    
+  }
 
   printf ("FILE = %s\nADDED_TAG = %s\n"
           "REMOVED_TAG = %s\nADDED_CATEGORY = %s\n",
