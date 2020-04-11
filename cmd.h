@@ -5,7 +5,7 @@
 const char *argp_program_version =
   "tags 1.0";
 const char *argp_program_bug_address =
-  "\n<ga_benamara@esi.dz>\n<aknoun@gmail.com>\n<ga_djelid@esi.dz>";
+  "\n<ga_benamara@esi.dz>\n<aaknoun.mehdi11@gmail.com>\n<ga_djelid@esi.dz>";
 
 /* Program documentation. */
 static char doc[] =
