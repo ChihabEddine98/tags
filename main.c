@@ -4,16 +4,27 @@
 #include <sys/xattr.h>
 #include <fcntl.h>
 #include <string.h>
+#include <asm/errno.h>
 #include "biblio.h"
+
 
 int main()
 {
-    const char *fichier = "../test.txt";
+    const char *fichier = "../teest";
+    //addCategorie("../teest","a3");
+    addTagInCategorie("../teest","a3","mehdi");
+//removeTag(fichier,"adem");
+ //  removeTagCategory("../teest","adem","lina");
+   // supprimerCategorie(fichier,"adem");
+   listTag(fichier);
+
+/*
     char buff[MAXLEN];
     //int fd = open("../teest", O_RDWR);
-    char tab[MAXLEN]="aymen";
-    //set_tags("../test.txt",tab,"data");
-    /*  if (setxattr("../teest", "user.tag4", tab, sizeof(tab), 0) > -1)
+    char tab[MAXLEN]="je suis une chaine decharactermotherfucker";
+
+  //  set_tags("../test.txt",tab,"data");
+  /*   if (setxattr("../teest", "user.tag9", tab, sizeof(tab), 0) > -1)
     {
         printf("tag set\n");
     }
@@ -21,20 +32,38 @@ int main()
     {
         perror(" err set");
     }
-*/
-    // if (listxattr(fichier, buff, sizeof(buff)) > -1)
-    // {
-    //     printf("tag names :%s\n", buff);
-    // }
-    // else
-    // {
-    //     perror(" err list");
-    // }
 
-    listTag("./test.txt");
+  int size=listxattr(fichier, buff, sizeof(buff));
+    Tags *list=malloc(sizeof(Tags));
+    list->NbTags=0;
+    list->sommet=NULL;
+  printf("size =%d\n",size);
+    if ( size> 0)
+    {
+       // char *mot=buff;
+        //printf("tag names :%s  %d\n", mot, sizeof(mot));
+        //printf("tag names :%s\n", buff[11]);
 
 
+    }
+    else
+    {
+        perror(" err list");
+    }
+    char buf_Tags[MAXLEN];
+    int t=getxattr(fichier, "user.adem",buf_Tags, sizeof(buf_Tags));
+    if (t){
+      //  init_tags(tags,buf_Tags);
+        //afficher(tags);
+       // char *m=TagsToBuf(tags);
+         //printf("value1 = %s \n",m);
 
-    //get_tags("../test.txt","data");
-    return 0;
+        printf("value = %s size =%d\n",buf_Tags, t);
+    }else{
+        printf("sdf");
+    }
+  //  get_tags("../test.txt","data");
+
+  */  return 0;
+
 }
