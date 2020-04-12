@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
         // {
         //     printf("%s is the current working directory ", fichierLu->d_name);
         // }
-        // printf("%d %s\n", sb1.st_ino, fichierLu->d_name);
+        printf("%s\n", fichierLu->d_name);
         listTag(fichierLu->d_name);
     }
 
