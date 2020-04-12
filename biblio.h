@@ -4,7 +4,7 @@
 
 #ifndef SYSTPROJET_BIBLIO_H
 #define SYSTPROJET_BIBLIO_H
-#define MAXLEN 500
+#define MAXLEN 256
 
 ///  ------------------- project structure ----------------------
 typedef struct {

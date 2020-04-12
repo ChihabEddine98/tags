@@ -44,6 +44,7 @@ void set_tags(char *Path,char data[MAXLEN],char *tagName,int replace){
 
         int i;
         for (i = 0; i <strlen(data) ; i++) {
+            printf("c=%c\n",data[i]);
             tab[i]=data[i];
         }
         tab[i]='\0';
@@ -103,7 +104,7 @@ void init_tags(Tags *tags,char buf[MAXLEN]){
 void get_tags(Tags *tags,char *Path,char *tagName){
 
     const char *fichier = Path;
-    char buf_Tags[1024];
+    char buf_Tags[MAXLEN];
     char buf[30];
     sprintf(buf,"user.%s",tagName);
     if (getxattr(fichier, buf, buf_Tags, sizeof(buf_Tags)))
@@ -152,12 +153,14 @@ void addCategorie(char *Path,char *tagName){
 }
 char *TagsToBuf(Tags *tags){
     Token *token=tags->sommet;
-    char *data=malloc(sizeof(MAXLEN));
+    char *data=malloc(sizeof(char)*MAXLEN);
     while(token!=NULL){
         strcat(token->tag, "#");
         strcat(data,token->tag);
+        printf("tag :%s\n",token->tag);
         token=token->suivant;
     }
+    printf("\ndata :%s\n",data);
     return data;
 
 }
