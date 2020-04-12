@@ -56,3 +56,4 @@ dkms.conf
 *.txt
 cmd
 main
+.vscode
