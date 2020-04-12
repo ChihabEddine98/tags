@@ -17,7 +17,7 @@ int isExistTag(Tags tags,char *tagName){
     /* walk through other tokens */
     while( token != NULL ) {
         if(strcmp(token->tag,tagName)==0)
-          return 1;
+            return 1;
         token = token->suivant;
     }
     return 0;
@@ -39,7 +39,7 @@ void set_tags(char *Path,char data[MAXLEN],char *tagName,int replace){
     }
     else{/// replace data
 
-         //removexattr(Path,tagName);
+        //removexattr(Path,tagName);
         char tab[MAXLEN];
 
         int i;
@@ -119,7 +119,7 @@ void ListOfTags(Tags *tableau,char buff[MAXLEN],int size){
     while(index<(size-1)){
         char *mot=&buff[index];
         char *m=&mot[5];
-       // printf("mot =%s and %d\n",m,strlen(m));
+        // printf("mot =%s and %d\n",m,strlen(m));
         add(tableau,m);
         index+= strlen(m)+6;
     }
@@ -147,7 +147,7 @@ void addCategorie(char *Path,char *tagName){
         printf("Error , category exist");
     }
     else{// new categorie
-      set_tags(Path,"",tagName,0);
+        set_tags(Path,"",tagName,0);
     }
 }
 char *TagsToBuf(Tags *tags){
@@ -215,6 +215,36 @@ void removeTagCategory(char *Path,char *category,char *tagName){
     }
     else{
         printf("Error , category doesn't exist");
+    }
+}
+void removeTag(char *Path,char *tagName){
+    const char *fichier =Path;
+    char buff[MAXLEN];
+    int size=listxattr(fichier, buff, sizeof(buff));
+    Tags *list=malloc(sizeof(Tags));
+    list->NbTags=0;
+    list->sommet=NULL;
+    if(size>0){
+        ListOfTags(list,buff,size);
+    }
+    Token *tmp=list->sommet;
+    int cnt=0;
+    while(tmp!=NULL && cnt==0){
+        Tags *listOfTags=malloc(sizeof(Tags));
+        listOfTags->NbTags=0;
+        listOfTags->sommet=NULL;
+        get_tags(listOfTags,Path,tmp->tag);
+        if(findInList(listOfTags,tagName)){
+            printf("\nremove\n");
+            deletTag(listOfTags, tagName);
+            char *buffer;
+            buffer = TagsToBuf(listOfTags);
+            printf("%s\n", buffer);
+            set_tags(Path, buffer, tmp->tag, 1);
+            cnt=1;
+        }
+        else tmp=tmp->suivant;
+
     }
 }
 

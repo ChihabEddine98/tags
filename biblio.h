@@ -37,6 +37,7 @@ void supprimerCategorie(char *Path,char *category);
 void removeTagCategory(char *Path,char *category,char *tagName);
 void afficher(Tags *tags);
 void listTag(char *Path);
+void removeTag(char *Path,char *tagName);
 
 
 #endif //SYSTPROJET_BIBLIO_H
