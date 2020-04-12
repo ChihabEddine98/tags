@@ -78,11 +78,16 @@ int main (int argc, char **argv)
   // Case of tag -d TAG -c CATEGORY file.txt
   if(arguments.rm_tag)
   {
-     // Case ok !
+     // Case -c CATEGORY
     if(arguments.add_category)
     {
       removeTagCategory(arguments.args[0],arguments.add_category,arguments.rm_tag);
     }
+    else
+    {
+      removeTag(arguments.args[0],arguments.rm_tag);
+    }
+    
     
     listTag(arguments.args[0]);
   }
