@@ -41,10 +41,7 @@ int main(int argc, char *argv[])
         {
             perror("stat");
         }
-        // if (sb1.st_ino == currentPid)
-        // {
-        //     printf("%s is the current working directory ", fichierLu->d_name);
-        // }
+
         printf("%s\n", fichierLu->d_name);
         listTag(fichierLu->d_name);
     }
