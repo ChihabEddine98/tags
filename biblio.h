@@ -38,5 +38,6 @@ void afficher(Tags *tags);
 void listTag(char *Path);
 void removeTag(char *Path, char *tagName);
 int contientTag(char *Path, char *tag);
+Tags *Allsoustags(char *Path, Tags *listcat);
 
 #endif //SYSTPROJET_BIBLIO_H

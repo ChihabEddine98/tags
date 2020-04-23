@@ -343,41 +343,44 @@ void listTag(char *Path)
         token = token->suivant;
     }
 }
+void addListInLIst(Tags *res,Tags *list){
+    Token *token=list->sommet;
+    while(token!=NULL) {
+        add(res,token->tag);
+        token=token->suivant;
+    }
+}
+Tags *Allsoustags(char *Path, Tags *listcat){
+    Tags *res = malloc(sizeof(Tags));
+    res->NbTags = 0;
+    res->sommet = NULL;
+    Token *tok=listcat->sommet;
+    while (tok!=NULL){
+        Tags *listOfTags = malloc(sizeof(Tags));
+        listOfTags->NbTags = 0;
+        listOfTags->sommet = NULL;
+        get_tags(listOfTags, Path, tok->tag);
+        add(res,tok->tag);
+        addListInLIst(res,listOfTags);
+        tok=tok->suivant;
+    }
+    return res;
+
+}
 
 int contientTag(char *Path, char *tag)
 {
     const char *fichier = Path;
     char buff[MAXLEN];
     int size = listxattr(fichier, buff, sizeof(buff));
-    Tags *list = malloc(sizeof(Tags));
-    list->NbTags = 0;
-    list->sommet = NULL;
+    Tags *listcat = malloc(sizeof(Tags));
+    listcat->NbTags = 0;
+    listcat->sommet = NULL;
     if (size > 0)
     {
-        ListOfTags(list, buff, size);
+        ListOfTags(listcat, buff, size);
     }
-    Token *token = list->sommet;
-    if (token == NULL)
-    {
-
-        return 0;
-    }
-    while (token != NULL)
-    {
-        // printf(" Categorie :%s\n", token->tag);
-        Tags *listOfTags = malloc(sizeof(Tags));
-        listOfTags->NbTags = 0;
-        listOfTags->sommet = NULL;
-        get_tags(listOfTags, Path, token->tag);
-        Token *newToken = listOfTags->sommet;
-        while (newToken != NULL)
-        {
-            // printf("  - tag :%s\n", newToken->tag);
-            if (strcmp(newToken->tag, tag) == 0)
-                return 1;
-            newToken = newToken->suivant;
-        }
-        token = token->suivant;
-    }
-    return 0;
+    if (listcat->sommet == NULL) return 0;
+    Tags *listall=Allsoustags(Path,listcat);
+    return findInList(listall,tag);
 }
