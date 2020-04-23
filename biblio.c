@@ -5,7 +5,6 @@
 #include <fcntl.h>
 #include <string.h>
 #include "biblio.h"
-#include "cmd.h"
 
 ///  -----------------------------------------------------------------------------------
 int isExistTag(Tags tags, char *tagName)
@@ -366,7 +365,6 @@ Tags *Allsoustags(char *Path, Tags *listcat){
         tok=tok->suivant;
     }
     return res;
-
 }
 
 int testCriteria(char *Path,search_criteria_t criteria){

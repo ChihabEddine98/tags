@@ -6,7 +6,6 @@
 #define SYSTPROJET_BIBLIO_H
 #define MAXLEN 256
 
-#include "cmd.h"
 ///  ------------------- project structure ----------------------
 typedef struct
 {
@@ -19,6 +18,15 @@ typedef struct
     Token *sommet;
     int NbTags;
 } Tags;
+
+typedef struct {
+    char** in;
+    char** not_in;
+    int in_size;
+    int not_in_size;
+
+} search_criteria_t;
+
 
 /// -------------------------------------------------------------
 
