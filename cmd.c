@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include "cmd.h"
 #include "biblio.h"
 
 /* Parse a single option. */

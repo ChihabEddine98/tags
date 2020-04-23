@@ -5,7 +5,6 @@
 #include <fcntl.h>
 #include <string.h>
 #include "biblio.h"
-#include "cmd.h"
 
 ///  -----------------------------------------------------------------------------------
 int isExistTag(Tags tags, char *tagName)

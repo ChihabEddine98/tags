@@ -1,4 +1,4 @@
-HEADERS = biblio.h
+HEADERS = biblio.h 
 TARGETS = cmd tag parcour
 
 all: tags
@@ -21,7 +21,7 @@ cmd.o: cmd.c  $(HEADERS) cmd.h
 parcour.o: parcour.c  $(HEADERS)
 			gcc -o parcour.o -c parcour.c
 
-biblio.o: biblio.c 
+biblio.o: biblio.c cmd.h
 			gcc -o biblio.o -c biblio.c
 
 clean:
