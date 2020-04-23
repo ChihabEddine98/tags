@@ -129,7 +129,7 @@ search_criteria_t tokenize( char **result, char *working, const char *src, const
        || strstr(result[k],"Not") || strstr(result[k],"NOT")|| strstr(result[k],"not")
        || strstr(result[k],"Pas") || strstr(result[k],"PAS")|| strstr(result[k],"pas") ) 
        {
-          char *justNot=&result[k][5];
+          // char *justNot=&result[k][5];
          //char motifNot[strlen(justNot)-1]; 
         //  for (size_t j = 0; j < strlen(justNot)-2; j++) 
         //  {
@@ -182,7 +182,8 @@ search_criteria_t tokenize( char **result, char *working, const char *src, const
         }
         else
         {
-          search_criteria_result.in[j]=result[k];
+          
+          search_criteria_result.in[j]=replace_char(result[k],' ','\0');
          search_criteria_result.in_size+=1;
          j++;
         }
