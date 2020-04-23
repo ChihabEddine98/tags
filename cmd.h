@@ -25,7 +25,8 @@ static struct argp_option options[] = {
   {"delete",    'd', "TAG",      0,  "Remove TAG from FILE" },
   {"category",   'c', "CATEGORY",0,      "Add a new category" },
   {"delete_category",   'x', "CATEGORY",0,      "Remove an existing category" },
-  {"search_files",   's', "CRITERIA",0,      "Search files satisfying a tag" },
+  {"search_files",   's', "CRITERIA",0,      "Search files satisfying a Criteria" },
+  {"search_tags",   'l', "FILE",0,      "Search tags sfor FILE" },
   {"output",   'o', "FILE", 0,
    "Output to FILE instead of standard output" },
   { 0 }
@@ -40,6 +41,7 @@ struct arguments
   char *add_category;
   char *rm_category;
   char *search_files_criteria;
+  char *search_tags_criteria;
   char *output_file;
 };
 

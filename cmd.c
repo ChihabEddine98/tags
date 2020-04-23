@@ -243,6 +243,10 @@ static error_t parse_opt (int key, char *arg, struct argp_state *state)
       arguments->search_files_criteria = arg;
       arguments->args[0]="";
       break;
+    
+    case 'l': 
+      arguments->search_tags_criteria = arg;
+      break;
     case 'o':
       arguments->output_file = arg;
       break;
@@ -265,6 +269,10 @@ static error_t parse_opt (int key, char *arg, struct argp_state *state)
     default:
       return ARGP_ERR_UNKNOWN;
     }
+
+    // MENU HERE !
+    // printf("Menu \n");
+
   return 0;
 }
 
@@ -286,6 +294,7 @@ int main (int argc, char **argv)
   arguments.add_category = 0;
   arguments.rm_category = 0;
   arguments.search_files_criteria=0;
+  arguments.search_tags_criteria=0;
   arguments.output_file = "-";
 
   /* Parse our arguments; every option seen by parse_opt will
@@ -386,6 +395,15 @@ int main (int argc, char **argv)
   
     
   }
+
+
+  // Case of tag -l file.txt
+
+  if (arguments.search_tags_criteria)
+  {
+    listTag(arguments.search_tags_criteria);
+  }
+  
   
 
   // printf ("FILE = %s\nADDED_TAG = %s\n"
