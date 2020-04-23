@@ -142,6 +142,14 @@ uint8_t strContains(char* string, char* toFind)
     }
     else return -1;
 }
+char* replace_char(char* str, char find, char replace){
+    char *current_pos = strchr(str,find);
+    while (current_pos){
+        *current_pos = replace;
+        current_pos = strchr(current_pos,find);
+    }
+    return str;
+}
 
 search_criteria_t tokenize( char **result, char *working, const char *src, const char *delim)
 {
@@ -207,7 +215,16 @@ search_criteria_t tokenize( char **result, char *working, const char *src, const
           // {
           //   motifNot[i]=s[i];
           // }
-          motifNot[strlen(s)-2]='\0';
+
+          motifNot[strlen(s)-1]='\0';
+          if (motifNot[strlen(s)-1]==')')
+          {
+            motifNot[strlen(s)-1]='\0';
+          }
+          
+          // replace_char(motifNot,')','\0');
+         
+          
           
           // strncpy ( motifNot, &result[k][5],strlen(justNot)-1);
           // motifNot[strlen(justNot)]='\0';
