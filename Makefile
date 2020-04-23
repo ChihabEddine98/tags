@@ -10,7 +10,7 @@ parcour: parcour.o biblio.o
 		gcc -o parcour parcour.o biblio.o
 
 cmd: cmd.o biblio.o
-		gcc -o cmd cmd.o biblio.o
+		gcc  -o cmd cmd.o biblio.o
 
 main.o: main.c $(HEADERS)
 			gcc -o main.o -c main.c
