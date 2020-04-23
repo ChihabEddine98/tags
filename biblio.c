@@ -381,6 +381,8 @@ int testCriteria(char *Path,search_criteria_t criteria){
     }
     if (listcat->sommet == NULL) return 0;
     Tags *listall=Allsoustags(Path,listcat);
+    printf(" \n int : %d \n",listall->NbTags);
+    
     for (size_t i = 0; i < criteria.in_size; i++)
     {
         if(findInList(listall,criteria.in[i])==0) return 0;
@@ -411,10 +413,10 @@ void listFilesRecursively(char *basePath,search_criteria_t criteria)
 
         if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
         {
-            printf("%s\n", dp->d_name);
+            
 
             if (testCriteria(dp->d_name,criteria)==1){
-                printf("%s\n", dp->d_name);
+                printf("{ %s } satisfy the criteria ! \n", dp->d_name);
             }
             // listTag("./fichiertest/test2/test.txt");
 

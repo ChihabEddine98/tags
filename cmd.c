@@ -6,60 +6,6 @@
 #include "biblio.h"
 #include "cmd.h"
 
-/* Parse a single option. */
-static error_t parse_opt (int key, char *arg, struct argp_state *state)
-{
-  /* Get the input argument from argp_parse, which we
-     know is a pointer to our arguments structure. */
-  struct arguments *arguments = state->input;
-
-  switch (key)
-    {
-      //  Add a tag
-    case 'a': 
-      arguments->add_tag = arg;
-      break;
-      //  Delete a tag
-    case 'd':
-      arguments->rm_tag = arg;
-      break;
-      //  Add a category
-    case 'c': 
-      arguments->add_category = arg;
-      break;
-      //  Delete a category
-    case 'x': 
-      arguments->rm_category = arg;
-      break;
-      //  Search with criteria
-    case 's': 
-      arguments->search_files_criteria = arg;
-      break;
-    case 'o':
-      arguments->output_file = arg;
-      break;
-
-    case ARGP_KEY_ARG:
-      if (state->arg_num > 1)
-        /* Too many arguments. */
-        argp_usage (state);
-
-      arguments->args[state->arg_num] = arg;
-
-      break;
-
-    case ARGP_KEY_END:
-      if (state->arg_num < 1)
-        /* Not enough arguments. */
-        argp_usage (state);
-      break;
-
-    default:
-      return ARGP_ERR_UNKNOWN;
-    }
-  return 0;
-}
-
 char* str_splitBetweenParentheses(char* a_str, const char a_delim)
 {
     char** result    = 0;
@@ -263,10 +209,64 @@ void printCriteriaT(search_criteria_t criteria)
   {
     printf("-- %s --\n",criteria.not_in[i]);
   }
-
-   
-
 }
+  
+
+/* Parse a single option. */
+static error_t parse_opt (int key, char *arg, struct argp_state *state)
+{
+  /* Get the input argument from argp_parse, which we
+     know is a pointer to our arguments structure. */
+  struct arguments *arguments = state->input;
+
+  switch (key)
+    {
+      //  Add a tag
+    case 'a': 
+      arguments->add_tag = arg;
+      break;
+      //  Delete a tag
+    case 'd':
+      arguments->rm_tag = arg;
+      break;
+      //  Add a category
+    case 'c': 
+      arguments->add_category = arg;
+      break;
+      //  Delete a category
+    case 'x': 
+      arguments->rm_category = arg;
+      break;
+      //  Search with criteria
+    case 's': 
+      arguments->search_files_criteria = arg;
+      break;
+    case 'o':
+      arguments->output_file = arg;
+      break;
+
+    case ARGP_KEY_ARG:
+      if (state->arg_num > 1)
+        /* Too many arguments. */
+        argp_usage (state);
+
+      arguments->args[state->arg_num] = arg;
+
+      break;
+
+    case ARGP_KEY_END:
+      if (state->arg_num < 1)
+        /* Not enough arguments. */
+        argp_usage (state);
+      break;
+
+    default:
+      return ARGP_ERR_UNKNOWN;
+    }
+  return 0;
+}
+
+
 
 
 /* Our argp parser. */
@@ -274,6 +274,7 @@ static struct argp argp = { options, parse_opt, args_doc, doc };
 
 int main (int argc, char **argv)
 {
+  
   struct arguments arguments;
   char *catego_tmp=malloc((size_t)(MAX_STRING+1));
 
@@ -367,7 +368,7 @@ int main (int argc, char **argv)
   
     printCriteriaT(search_criteria_result);
 
-    printf("\n----- %s -----\n",search_criteria_result.not_in[1]);
+    listFilesRecursively(".",search_criteria_result);
 
 
     free(res);
