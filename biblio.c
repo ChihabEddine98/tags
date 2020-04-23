@@ -381,15 +381,19 @@ int testCriteria(char *Path,search_criteria_t criteria){
     }
     if (listcat->sommet == NULL) return 0;
     Tags *listall=Allsoustags(Path,listcat);
-    printf(" \n int : %d \n",listall->NbTags);
+    printf(" \n int : %d  and name %s\n",listall->NbTags,Path);
     
     for (size_t i = 0; i < criteria.in_size; i++)
     {
+        printf(" \n test of [%s] is : %d  tail=%d\n",criteria.in[i],findInList(listall,criteria.in[i]),strlen(criteria.in[i]));
         if(findInList(listall,criteria.in[i])==0) return 0;
     }
-    for (size_t i = 0; i < criteria.not_in_size; i++)
+    printf(" \n taille : %d \n",criteria.not_in_size);
+
+    for (size_t j = 0; j < criteria.not_in_size; j++)
     {
-        if(findInList(listall,criteria.in[i])==1) return 0;
+        printf(" \n test of [%s] is : %d \n",criteria.not_in[j],findInList(listall,criteria.not_in[j]));
+        if(findInList(listall,criteria.not_in[j])==1) return 0;
     }
 
     return 1;
