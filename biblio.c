@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include "biblio.h"
+#include <dirent.h>
 
 ///  -----------------------------------------------------------------------------------
 int isExistTag(Tags tags, char *tagName)
@@ -389,7 +390,42 @@ int testCriteria(char *Path,search_criteria_t criteria){
         if(findInList(listall,criteria.in[i])==1) return 0;
     }
 
-    return 0;
+    return 1;
 
 
+}
+
+void listFilesRecursively(char *basePath,search_criteria_t criteria)
+{
+    char path[1000];
+    struct dirent *dp;
+
+    DIR *dir = opendir(basePath);
+
+    // Unable to open directory stream
+    if (!dir)
+        return;
+
+    while ((dp = readdir(dir)) != NULL)
+    {
+
+        if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
+        {
+            printf("%s\n", dp->d_name);
+
+            if (testCriteria(dp->d_name,criteria)==1){
+                printf("%s\n", dp->d_name);
+            }
+            // listTag("./fichiertest/test2/test.txt");
+
+            // Construct new path from our base path
+            strcpy(path, basePath);
+            strcat(path, "/");
+            strcat(path, dp->d_name);
+
+            listFilesRecursively(path,criteria);
+        }
+    }
+
+    closedir(dir);
 }
