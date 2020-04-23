@@ -18,8 +18,8 @@ int main()
     fgets(path, sizeof(path), stdin);
     if (path[0] == '\n')
         memcpy(path, "./", strlen("./"));
-    addCategorie("./cmd.c", "Color");
-    addTagInCategorie("./cmd.c", "Color", "Blue");
+    // addCategorie("./cmd.c", "Color");
+    // addTagInCategorie("./cmd.c", "Color", "Blue");
     listFilesRecursively(path);
 
     return 0;
@@ -44,8 +44,10 @@ void listFilesRecursively(char *basePath)
     {
         if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
         {
-            // printf("%s\n", dp->d_name);
-            listTag(dp->d_name);
+            // printf("%d \n", contientTag(dp->d_name, "Blue"));
+            if (contientTag(dp->d_name, "Blue") == 1)
+                printf("%s\n", dp->d_name);
+            // listTag(dp->d_name);
 
             // Construct new path from our base path
             strcpy(path, basePath);
