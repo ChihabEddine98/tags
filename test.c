@@ -27,7 +27,7 @@ int main()
 }
 
 /**
- * Lists all files and sub-directories recursively 
+ * Lists all files and sub-directories recursively
  * considering path as base path.
  */
 void listFilesRecursively(char *basePath)

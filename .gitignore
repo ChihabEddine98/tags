@@ -56,5 +56,6 @@ dkms.conf
 *.txt
 cmd
 main
+test
 parcour
 .vscode

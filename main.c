@@ -10,13 +10,16 @@
 
 int main()
 {
-    const char *fichier = "../teest";
-    //addCategorie("../teest","a3");
-    addTagInCategorie("../teest","a3","mehdi");
+    const char *fichier = "../test1";
+    //addCategorie("../test2","color");
+   //addTagInCategorie("../test2","color","blue");
 //removeTag(fichier,"adem");
  //  removeTagCategory("../teest","adem","lina");
    // supprimerCategorie(fichier,"adem");
-   listTag(fichier);
+  // if (contientTag(fichier,"aymen")==1) printf("\n rana hna hbb");
+   //listTag(fichier);
+   char mot[]="Aymen";
+    low(mot);
 
 /*
     char buff[MAXLEN];
