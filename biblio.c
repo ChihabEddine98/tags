@@ -365,7 +365,6 @@ Tags *Allsoustags(char *Path, Tags *listcat){
         tok=tok->suivant;
     }
     return res;
-
 }
 
 int testCriteria(char *Path,search_criteria_t criteria){
