@@ -7,17 +7,20 @@
 #include "biblio.h"
 #include <dirent.h>
 #include <ctype.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 ///  -----------------------------------------------------------------------------------
-void low(char str[40]){
-    for(int i=0; str[i]!='\0'; i++)
+void low(char str[40])
+{
+    for (int i = 0; str[i] != '\0'; i++)
     {
-        if(str[i]>='A' && str[i]<='Z')
+        if (str[i] >= 'A' && str[i] <= 'Z')
         {
             str[i] = str[i] + 32;
         }
     }
-    printf("\n%s",str);
+    printf("\n%s", str);
 }
 int isExistTag(Tags tags, char *tagName)
 {
@@ -355,31 +358,36 @@ void listTag(char *Path)
         token = token->suivant;
     }
 }
-void addListInLIst(Tags *res,Tags *list){
-    Token *token=list->sommet;
-    while(token!=NULL) {
-        add(res,token->tag);
-        token=token->suivant;
+void addListInLIst(Tags *res, Tags *list)
+{
+    Token *token = list->sommet;
+    while (token != NULL)
+    {
+        add(res, token->tag);
+        token = token->suivant;
     }
 }
-Tags *Allsoustags(char *Path, Tags *listcat){
+Tags *Allsoustags(char *Path, Tags *listcat)
+{
     Tags *res = malloc(sizeof(Tags));
     res->NbTags = 0;
     res->sommet = NULL;
-    Token *tok=listcat->sommet;
-    while (tok!=NULL){
+    Token *tok = listcat->sommet;
+    while (tok != NULL)
+    {
         Tags *listOfTags = malloc(sizeof(Tags));
         listOfTags->NbTags = 0;
         listOfTags->sommet = NULL;
         get_tags(listOfTags, Path, tok->tag);
-        add(res,tok->tag);
-        addListInLIst(res,listOfTags);
-        tok=tok->suivant;
+        add(res, tok->tag);
+        addListInLIst(res, listOfTags);
+        tok = tok->suivant;
     }
     return res;
 }
 
-int testCriteria(char *Path,search_criteria_t criteria){
+int testCriteria(char *Path, search_criteria_t criteria)
+{
     const char *fichier = Path;
     char buff[MAXLEN];
     int size = listxattr(fichier, buff, sizeof(buff));
@@ -390,28 +398,32 @@ int testCriteria(char *Path,search_criteria_t criteria){
     {
         ListOfTags(listcat, buff, size);
     }
-    if (listcat->sommet == NULL) return 0;
-    Tags *listall=Allsoustags(Path,listcat);
+    if (listcat->sommet == NULL)
+        return 0;
+    Tags *listall = Allsoustags(Path, listcat);
     //printf(" \n int : %d  and name %s\n",listall->NbTags,Path);
     for (size_t i = 0; i < criteria.in_size; i++)
     {
-        if(findInList(listall,criteria.in[i])==0) return 0;
+        if (findInList(listall, criteria.in[i]) == 0)
+            return 0;
     }
 
     for (size_t j = 0; j < criteria.not_in_size; j++)
     {
-        if(findInList(listall,criteria.not_in[j])==1) return 0;
+        if (findInList(listall, criteria.not_in[j]) == 1)
+            return 0;
     }
 
     return 1;
-
-
 }
 
-void listFilesRecursively(char *basePath,search_criteria_t criteria)
+void listFilesRecursively(char *basePath, search_criteria_t criteria)
 {
     char path[1000];
     struct dirent *dp;
+    int inodes[10000];
+    int cpt = 0;
+    struct stat res1;
 
     DIR *dir = opendir(basePath);
 
@@ -424,10 +436,16 @@ void listFilesRecursively(char *basePath,search_criteria_t criteria)
 
         if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
         {
-            
 
-            if (testCriteria(dp->d_name,criteria)==1){
-                printf("{ %s } satisfy the criteria ! \n", dp->d_name);
+            if (testCriteria(dp->d_name, criteria) == 1)
+            {
+                stat(dp->d_name, &res1);
+                if (existe(res1.st_ino, cpt, inodes) == 0)
+                {
+                    printf("{ %s } satisfy the criteria ! \n", dp->d_name);
+                    inodes[cpt] = res1.st_ino;
+                    cpt++;
+                }
             }
             // listTag("./fichiertest/test2/test.txt");
 
@@ -436,9 +454,20 @@ void listFilesRecursively(char *basePath,search_criteria_t criteria)
             strcat(path, "/");
             strcat(path, dp->d_name);
 
-            listFilesRecursively(path,criteria);
+            listFilesRecursively(path, criteria);
         }
     }
 
     closedir(dir);
+}
+int existe(int inode, int cpt, int tab[])
+{
+    for (int i = 0; i < cpt; i++)
+    {
+        if (tab[i] == inode)
+        {
+            return 1;
+        }
+    }
+    return 0;
 }

@@ -19,14 +19,14 @@ typedef struct
     int NbTags;
 } Tags;
 
-typedef struct {
-    char** in;
-    char** not_in;
+typedef struct
+{
+    char **in;
+    char **not_in;
     int in_size;
     int not_in_size;
 
 } search_criteria_t;
-
 
 /// -------------------------------------------------------------
 
@@ -48,7 +48,8 @@ void listTag(char *Path);
 void removeTag(char *Path, char *tagName);
 int contientTag(char *Path, char *tag);
 Tags *Allsoustags(char *Path, Tags *listcat);
-int testCriteria(char *Path,search_criteria_t criteria);
-void listFilesRecursively(char *basePath,search_criteria_t criteria);
+int testCriteria(char *Path, search_criteria_t criteria);
+void listFilesRecursively(char *basePath, search_criteria_t criteria);
 void low(char str[40]);
+int existe(int inode, int cpt, int tab[]);
 #endif //SYSTPROJET_BIBLIO_H
