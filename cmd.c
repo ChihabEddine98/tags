@@ -60,6 +60,53 @@ static error_t parse_opt (int key, char *arg, struct argp_state *state)
   return 0;
 }
 
+char* str_splitBetweenParentheses(char* a_str, const char a_delim)
+{
+    char** result    = 0;
+    size_t count     = 0;
+    char* tmp        = a_str;
+    char* last_comma = 0;
+    char delim[2];
+    delim[0] = a_delim;
+    delim[1] = 0;
+
+    /* Count how many elements will be extracted. */
+    while (*tmp)
+    {
+        if (a_delim == *tmp)
+        {
+            count++;
+            last_comma = tmp;
+        }
+        tmp++;
+    }
+
+    /* Add space for trailing token. */
+    count += last_comma < (a_str + strlen(a_str) - 1);
+
+    /* Add space for terminating null string so caller
+       knows where the list of returned strings ends. */
+    count++;
+
+    result = malloc(sizeof(char*) * count);
+
+    if (result)
+    {
+        size_t idx  = 0;
+        char* token = strtok(a_str, delim);
+
+        while (token)
+        {
+            assert(idx < count);
+            *(result + idx++) = strdup(token);
+            token = strtok(0, delim);
+        }
+        assert(idx == count - 1);
+        *(result + idx) = 0;
+    }
+      
+    return result[1];
+}
 char *iterate(char *p, const char *d, const size_t len)
 {   
    while(p!=NULL && *p && memcmp(p, d, len)==0)
@@ -124,10 +171,9 @@ search_criteria_t tokenize( char **result, char *working, const char *src, const
      {
 
 
-      //  if(strstr(result[i],"Non") || strstr(result[i],"NON")|| strContains(result[i],"non") 
-      //  || strstr(result[i],"Not") || strstr(result[i],"NOT")|| strstr(result[i],"not")
-      //  || strstr(result[i],"Pas") || strstr(result[i],"PAS")|| strstr(result[i],"pas") ) 
-        if(strContains(result[k],"non"))
+       if(strstr(result[k],"Non") || strstr(result[k],"NON")|| strstr(result[k],"non")
+       || strstr(result[k],"Not") || strstr(result[k],"NOT")|| strstr(result[k],"not")
+       || strstr(result[k],"Pas") || strstr(result[k],"PAS")|| strstr(result[k],"pas") ) 
        {
           char *justNot=&result[k][5];
          //char motifNot[strlen(justNot)-1]; 
@@ -154,9 +200,17 @@ search_criteria_t tokenize( char **result, char *working, const char *src, const
         // search_criteria_result.not_in[i][strlen(justNot)-2]='\0';
         // printf("\n == %s ==",search_criteria_result.not_in[i]);
         // search_criteria_result.not_in_size+=1;
-          char *motifNot=malloc(strlen(justNot)-1);
-          strncpy ( motifNot, &result[k][5],strlen(justNot)-2);
-          motifNot[strlen(justNot)-2]='\0';
+          char* s=str_splitBetweenParentheses(result[k],'(');
+          char *motifNot=malloc(strlen(s));
+          motifNot=s;
+          // for (size_t i = 0; i < strlen(s)- ;i++)
+          // {
+          //   motifNot[i]=s[i];
+          // }
+          motifNot[strlen(s)-2]='\0';
+          
+          // strncpy ( motifNot, &result[k][5],strlen(justNot)-1);
+          // motifNot[strlen(justNot)]='\0';
           // search_criteria_result.not_in[i]=malloc(sizeof(motifNot));
           search_criteria_result.not_in[i]=motifNot;
          search_criteria_result.not_in_size+=1;
@@ -290,13 +344,13 @@ int main (int argc, char **argv)
   if (arguments.search_files_criteria)
   {
     printf("\n yoooohooo searching !\n  %s  \n",arguments.search_files_criteria);
-    char** res=malloc(50);
-    char* w=malloc(50);
+    char** res=malloc(500);
+    char* w=malloc(500);
     search_criteria_t search_criteria_result =tokenize(res,w,arguments.search_files_criteria,"et");
   
     printCriteriaT(search_criteria_result);
 
-    printf("\n----- %s -----\n",search_criteria_result.not_in[0]);
+    printf("\n----- %s -----\n",search_criteria_result.not_in[1]);
 
 
     free(res);

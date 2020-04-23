@@ -2,6 +2,7 @@
 #define SYSTPROJET_CMD_H
 #include <argp.h>
 #include <stdint.h>
+#include <assert.h>
 
 
 #define MAX_STRING 25
