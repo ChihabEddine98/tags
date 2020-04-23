@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "biblio.h"
+#include "cmd.h"
 
 /* Parse a single option. */
 static error_t parse_opt (int key, char *arg, struct argp_state *state)
