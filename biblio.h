@@ -50,5 +50,5 @@ int contientTag(char *Path, char *tag);
 Tags *Allsoustags(char *Path, Tags *listcat);
 int testCriteria(char *Path,search_criteria_t criteria);
 void listFilesRecursively(char *basePath,search_criteria_t criteria);
-
+void low(char str[40]);
 #endif //SYSTPROJET_BIBLIO_H

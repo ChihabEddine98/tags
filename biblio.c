@@ -6,8 +6,19 @@
 #include <string.h>
 #include "biblio.h"
 #include <dirent.h>
+#include <ctype.h>
 
 ///  -----------------------------------------------------------------------------------
+void low(char str[40]){
+    for(int i=0; str[i]!='\0'; i++)
+    {
+        if(str[i]>='A' && str[i]<='Z')
+        {
+            str[i] = str[i] + 32;
+        }
+    }
+    printf("\n%s",str);
+}
 int isExistTag(Tags tags, char *tagName)
 {
 
@@ -382,7 +393,6 @@ int testCriteria(char *Path,search_criteria_t criteria){
     if (listcat->sommet == NULL) return 0;
     Tags *listall=Allsoustags(Path,listcat);
     printf(" \n int : %d  and name %s\n",listall->NbTags,Path);
-    
     for (size_t i = 0; i < criteria.in_size; i++)
     {
         printf(" \n test of [%s] is : %d  tail=%d\n",criteria.in[i],findInList(listall,criteria.in[i]),strlen(criteria.in[i]));
