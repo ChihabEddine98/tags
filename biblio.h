@@ -6,6 +6,7 @@
 #define SYSTPROJET_BIBLIO_H
 #define MAXLEN 256
 
+#include "cmd.h"
 ///  ------------------- project structure ----------------------
 typedef struct
 {
@@ -39,5 +40,6 @@ void listTag(char *Path);
 void removeTag(char *Path, char *tagName);
 int contientTag(char *Path, char *tag);
 Tags *Allsoustags(char *Path, Tags *listcat);
+int testCriteria(char *Path,search_criteria_t criteria);
 
 #endif //SYSTPROJET_BIBLIO_H

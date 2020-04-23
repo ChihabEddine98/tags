@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include "biblio.h"
+#include "cmd.h"
 
 ///  -----------------------------------------------------------------------------------
 int isExistTag(Tags tags, char *tagName)
@@ -368,8 +369,7 @@ Tags *Allsoustags(char *Path, Tags *listcat){
 
 }
 
-int contientTag(char *Path, char *tag)
-{
+int testCriteria(char *Path,search_criteria_t criteria){
     const char *fichier = Path;
     char buff[MAXLEN];
     int size = listxattr(fichier, buff, sizeof(buff));
@@ -382,5 +382,16 @@ int contientTag(char *Path, char *tag)
     }
     if (listcat->sommet == NULL) return 0;
     Tags *listall=Allsoustags(Path,listcat);
-    return findInList(listall,tag);
+    for (size_t i = 0; i < criteria.in_size; i++)
+    {
+        if(findInList(listall,criteria.in[i])==0) return 0;
+    }
+    for (size_t i = 0; i < criteria.not_in_size; i++)
+    {
+        if(findInList(listall,criteria.in[i])==1) return 0;
+    }
+
+    return 0;
+
+
 }
