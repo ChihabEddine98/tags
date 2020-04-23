@@ -12,15 +12,16 @@ int main()
 {
     // Directory path to list files
     char path[100];
-
-    // Input path from user
+    char res[100];
     printf("Enter path to list files: ");
-    fgets(path, sizeof(path), stdin);
-    if (path[0] == '\n')
+
+    int result = scanf("%99[^\n]%*c", path);
+    if (result != 1)
         memcpy(path, "./", strlen("./"));
-    // addCategorie("./cmd.c", "Color");
-    // addTagInCategorie("./cmd.c", "Color", "Blue");
+
     listFilesRecursively(path);
+    // addCategorie("./fichiertest/test2", "Color");
+    // addTagInCategorie("./fichiertest/test2", "Color", "Blue");
 
     return 0;
 }
@@ -42,12 +43,14 @@ void listFilesRecursively(char *basePath)
 
     while ((dp = readdir(dir)) != NULL)
     {
+
         if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
         {
-            // printf("%d \n", contientTag(dp->d_name, "Blue"));
+            printf("%s\n", dp->d_name);
+
             if (contientTag(dp->d_name, "Blue") == 1)
                 printf("%s\n", dp->d_name);
-            // listTag(dp->d_name);
+            // listTag("./fichiertest/test2/test.txt");
 
             // Construct new path from our base path
             strcpy(path, basePath);
