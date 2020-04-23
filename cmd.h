@@ -48,13 +48,7 @@ struct arguments
  * Structure for searching Criteria !
 */
 
-typedef struct {
-  char** in;
-  char** not_in;
-  int in_size;
-  int not_in_size;
 
-} search_criteria_t;
 
 
 
