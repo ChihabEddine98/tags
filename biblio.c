@@ -328,6 +328,20 @@ void afficher(Tags *tags)
         token = token->suivant;
     }
 }
+void afficherhierarchique(Tags *tags){
+    Token *token = tags->sommet;
+    printf("\n");
+
+    while (token != NULL)
+    {
+        printf("%s", token->tag);
+        token = token->suivant;
+        if(token!=NULL)
+            printf("/");
+    }
+    printf("\n");
+
+}
 
 void listTag(char *Path)
 {
@@ -366,6 +380,23 @@ void addListInLIst(Tags *res, Tags *list)
         add(res, token->tag);
         token = token->suivant;
     }
+}
+Tags *Allsoustags2(char *Path, Tags *listcat)
+{
+    Tags *res = malloc(sizeof(Tags));
+    res->NbTags = 0;
+    res->sommet = NULL;
+    Token *tok = listcat->sommet;
+    while (tok != NULL)
+    {
+        Tags *listOfTags = malloc(sizeof(Tags));
+        listOfTags->NbTags = 0;
+        listOfTags->sommet = NULL;
+        get_tags(listOfTags, Path, tok->tag);
+        addListInLIst(res, listOfTags);
+        tok = tok->suivant;
+    }
+    return res;
 }
 Tags *Allsoustags(char *Path, Tags *listcat)
 {
@@ -415,6 +446,79 @@ int testCriteria(char *Path, search_criteria_t criteria)
     }
 
     return 1;
+}
+char *paireTag(char *Path,char *tag1){
+    const char *fichier = Path;
+    char buff[MAXLEN];
+    int size = listxattr(fichier, buff, sizeof(buff));
+    Tags *list = malloc(sizeof(Tags));
+    list->NbTags = 0;
+    list->sommet = NULL;
+    if (size > 0)
+    {
+        ListOfTags(list, buff, size);
+    }
+    Token *token = list->sommet;
+    if (token == NULL)
+    {
+        return "";
+    }
+    while (token != NULL)
+    {
+        Tags *listOfTags = malloc(sizeof(Tags));
+        listOfTags->NbTags = 0;
+        listOfTags->sommet = NULL;
+        get_tags(listOfTags, Path, token->tag);
+        if(findInList(listOfTags,tag1)) return token->tag;
+        token = token->suivant;
+    }
+    return "";
+}
+Tags *lienEntreTags(char *Path,char *tag1,char *tag2){
+    const char *fichier = Path;
+    char buff[MAXLEN];
+    int size = listxattr(fichier, buff, sizeof(buff));
+    Tags *listcat = malloc(sizeof(Tags));
+    listcat->NbTags = 0;
+    listcat->sommet = NULL;
+    if (size > 0)
+    {
+        ListOfTags(listcat, buff, size);
+    }
+    if (listcat->sommet == NULL)
+        return NULL;
+    Tags *listall = Allsoustags2(Path, listcat);
+    int count=1;
+    char *tagtmp=malloc(45);
+    memcpy(tagtmp,tag2,strlen(tag2));
+    Tags *res = malloc(sizeof(Tags));
+    res->NbTags = 0;
+    res->sommet = NULL;
+    for (int j = 0; j <10 ; j++) {
+        if(strcmp(tagtmp,tag1)==0){
+            add(res,tag1);
+            break;
+        }
+        else if(findInList(listall,tagtmp)){
+            add(res,tagtmp);
+            if(strcmp(paireTag(Path,tagtmp),"")==0)
+                return NULL;
+            strcpy(tagtmp,paireTag(Path,tagtmp));
+        } else {
+            return NULL;
+        }
+    }
+    return res;
+
+}
+void lienhierarchique(char *Path,char *tag1,char *tag2){
+    Tags *list1=lienEntreTags(Path,tag1,tag2);
+    Tags *list2=lienEntreTags(Path,tag2,tag1);
+    if(list1!=NULL){
+     afficherhierarchique(list1);
+    }else if (list2!=NULL){
+        afficherhierarchique(list2);
+    }else printf("\nil n'y a pas de lien");
 }
 
 void listFilesRecursively(char *basePath, search_criteria_t criteria)
