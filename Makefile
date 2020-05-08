@@ -1,5 +1,5 @@
 HEADERS = biblio.h 
-TARGETS = cmd tag parcour
+TARGETS = cmd tag parcour main
 
 all: tags
 
