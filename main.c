@@ -7,10 +7,15 @@
 #include <asm/errno.h>
 #include "biblio.h"
 
-
+void mypause ( void )
+{
+    printf ( "Press [Enter] to continue . . ." );
+    fflush ( stdout );
+    getchar();
+}
 int main()
 {
-    const char *fichier = "../teest";
+  //  const char *fichier = "../teest";
    // addCategorie("../teest","all");
  //  addTagInCategorie("../teest","all","color1");
 //removeTag(fichier,"adem");
@@ -19,56 +24,107 @@ int main()
   // if (contientTag(fichier,"aymen")==1) printf("\n rana hna hbb");
    //listTag(fichier);
    //lienEntreTags(fichier,"all","blue");
-   lienhierarchique(fichier,"color1","blue");
+  // lienhierarchique(fichier,"color1","blue");
    //char mot[]="Aymen";
     //low(mot);
 
-/*
-    char buff[MAXLEN];
-    //int fd = open("../teest", O_RDWR);
-    char tab[MAXLEN]="je suis une chaine decharactermotherfucker";
+    char fichier[85];
+    char catName[45];
+    char tagNAme[45];
+    char tagNAme2[45];
 
-  //  set_tags("../test.txt",tab,"data");
-  /*   if (setxattr("../teest", "user.tag9", tab, sizeof(tab), 0) > -1)
+    printf("\n\n\t\tSysteme project - Best place to learn\n\n\n");
+    int choice, num, i;
+    char ch;
+    while(1)
     {
-        printf("tag set\n");
-    }
-    else
-    {
-        perror(" err set");
-    }
+        printf("\n1. ajouter catégorie  \n");
+        printf("2. ajouter tag dans catégorie\n");
+        printf("3. supprimer categorie\n");
+        printf("4. supprimer tag dans catégorie \n");
+        printf("5. supprimer tag\n");
+        printf("6. lien hiérarchique entre deux tag\n");
+        printf("7. Afficher les Tags\n");
+        printf("8. Exit \n\n\n");
 
-  int size=listxattr(fichier, buff, sizeof(buff));
-    Tags *list=malloc(sizeof(Tags));
-    list->NbTags=0;
-    list->sommet=NULL;
-  printf("size =%d\n",size);
-    if ( size> 0)
-    {
-       // char *mot=buff;
-        //printf("tag names :%s  %d\n", mot, sizeof(mot));
-        //printf("tag names :%s\n", buff[11]);
+        printf("Enter your choice :  ");
+        scanf("%d",&choice);
 
+        switch(choice)
+        {
+            case 1:
+                printf("le chemin du fichier:\n");
+                scanf("%s", fichier);
+                printf("nom de categorie:\n");
+                scanf("%s", catName);
+                printf("%s",fichier);
+                addCategorie(fichier,catName);
 
+                break;
+
+            case 2:
+                printf("le chemin du fichier:\n");
+                scanf("%s", fichier);
+                printf("nom de categorie:\n");
+                scanf("%s", catName);
+                printf("nom de tag :\n");
+                scanf("%s", tagNAme);
+                addTagInCategorie(fichier,catName,tagNAme);
+
+                break;
+            case 3:
+                printf("le chemin du fichier:\n");
+                scanf("%s", fichier);
+                printf("nom de categorie :\n");
+                scanf("%s", catName);
+                supprimerCategorie(fichier,catName);
+
+                break;
+            case 4:
+                printf("le chemin du fichier:\n");
+                scanf("%s", fichier);
+                printf("nom de categorie :\n");
+                scanf("%s", catName);
+                printf("nom de tag :\n");
+                scanf("%s", tagNAme);
+                removeTagCategory(fichier,catName,tagNAme);
+
+                break;
+            case 5:
+                printf("le chemin du fichier:\n");
+                scanf("%s", fichier);
+                printf("nom de tag :\n");
+                scanf("%s", tagNAme);
+                removeTag(fichier,tagNAme);
+
+                break;
+            case 6:
+                printf("le chemin du fichier:\n");
+                scanf("%s", fichier);
+                printf("nom de tag 1:\n");
+                scanf("%s", tagNAme);
+                printf("nom de tag 2:\n");
+                scanf("%s", tagNAme2);
+                lienhierarchique(fichier,tagNAme,tagNAme2);
+
+                break;
+            case 7:
+                printf("le chemin du fichier:\n");
+                scanf("%s", fichier);
+                printf("\n\n");
+                listTag(fichier);
+                printf("\n\n");
+
+                break;
+
+            case 8:
+                printf("\n\n\t\t\tCoding is Fun !\n\n\n");
+                exit(0);    // terminates the complete program execution
+            default:
+                printf("default\n\n");
+        }
     }
-    else
-    {
-        perror(" err list");
-    }
-    char buf_Tags[MAXLEN];
-    int t=getxattr(fichier, "user.adem",buf_Tags, sizeof(buf_Tags));
-    if (t){
-      //  init_tags(tags,buf_Tags);
-        //afficher(tags);
-       // char *m=TagsToBuf(tags);
-         //printf("value1 = %s \n",m);
-
-        printf("value = %s size =%d\n",buf_Tags, t);
-    }else{
-        printf("sdf");
-    }
-  //  get_tags("../test.txt","data");
-
-  */  return 0;
+    printf("\n\n\t\t\tCoding is Fun !\n\n\n");
+    return 0;
 
 }
