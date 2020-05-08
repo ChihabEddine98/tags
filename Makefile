@@ -12,6 +12,9 @@ parcour: parcour.o biblio.o
 cmd: cmd.o biblio.o
 		gcc  -o cmd cmd.o biblio.o
 
+main: main.o biblio.o
+		gcc  -o main main.o biblio.o
+
 main.o: main.c $(HEADERS)
 			gcc -o main.o -c main.c
 
