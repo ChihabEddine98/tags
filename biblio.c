@@ -20,7 +20,7 @@ void low(char str[40])
             str[i] = str[i] + 32;
         }
     }
-    printf("\n%s", str);
+    //printf("\n%s", str);
 }
 int isExistTag(Tags tags, char *tagName)
 {
@@ -63,7 +63,7 @@ void set_tags(char *Path, char data[MAXLEN], char *tagName, int replace)
         int i;
         for (i = 0; i < strlen(data); i++)
         {
-            printf("c=%c\n", data[i]);
+            //printf("c=%c\n", data[i]);
             tab[i] = data[i];
         }
         tab[i] = '\0';
@@ -142,6 +142,7 @@ void get_tags(Tags *tags, char *Path, char *tagName)
     }
     else
     {
+        red();
         printf("Error");
     }
 }
@@ -183,6 +184,7 @@ void addCategorie(char *Path, char *tagName)
     }
     if (findInList(list, tagName))
     {
+        red();
         printf("Error , category exist");
     }
     else
@@ -198,10 +200,10 @@ char *TagsToBuf(Tags *tags)
     {
         strcat(token->tag, "#");
         strcat(data, token->tag);
-        printf("tag :%s\n", token->tag);
+        //printf("tag :%s\n", token->tag);
         token = token->suivant;
     }
-    printf("\ndata :%s\n", data);
+    //printf("\ndata :%s\n", data);
     return data;
 }
 
@@ -229,7 +231,7 @@ void addTagInCategorie(char *Path, char *category, char *tagName)
             add(listOfTags, tagName); /// add the tag to the list of tags
             char *buffer;
             buffer = TagsToBuf(listOfTags);
-            printf("%s\n", buffer);
+            //printf("%s\n", buffer);
             set_tags(Path, buffer, category, 1);
         }
         else
@@ -237,6 +239,7 @@ void addTagInCategorie(char *Path, char *category, char *tagName)
     }
     else
     {
+        red();
         printf("Error , category doesn't exist");
     }
 }
@@ -262,11 +265,12 @@ void removeTagCategory(char *Path, char *category, char *tagName)
         deletTag(listOfTags, tagName);
         char *buffer;
         buffer = TagsToBuf(listOfTags);
-        printf("%s\n", buffer);
+        //printf("%s\n", buffer);
         set_tags(Path, buffer, category, 1);
     }
     else
     {
+        green();
         printf("Error , category doesn't exist");
     }
 }
@@ -292,11 +296,11 @@ void removeTag(char *Path, char *tagName)
         get_tags(listOfTags, Path, tmp->tag);
         if (findInList(listOfTags, tagName))
         {
-            printf("\nremove\n");
+           // printf("\nremove\n");
             deletTag(listOfTags, tagName);
             char *buffer;
             buffer = TagsToBuf(listOfTags);
-            printf("%s\n", buffer);
+            //printf("%s\n", buffer);
             set_tags(Path, buffer, tmp->tag, 1);
             cnt = 1;
         }
@@ -312,12 +316,15 @@ void supprimerCategorie(char *Path, char *category)
     sprintf(buf, "user.%s", category);
     int supr = removexattr(fichier, buf);
     if (supr == 0)
-    {
+    {   green();
         printf("success ,supprimer Categorie ");
     }
-    else
+    else{
+        red();
         printf("Error ,supprimer Categorie ");
 }
+}
+
 void afficher(Tags *tags)
 {
 
