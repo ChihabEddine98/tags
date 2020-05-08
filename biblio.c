@@ -363,7 +363,10 @@ void listTag(char *Path)
     }
     while (token != NULL)
     {
-        printf(" Categorie :%s\n", token->tag);
+        red();
+        printf(" Categorie :");
+        yellow();
+        printf("%s\n", token->tag);
         Tags *listOfTags = malloc(sizeof(Tags));
         listOfTags->NbTags = 0;
         listOfTags->sommet = NULL;
@@ -574,4 +577,29 @@ int existe(int inode, int cpt, int tab[])
         }
     }
     return 0;
+}
+void red () {
+    printf("\033[1;31m");
+}
+void blue () {
+    printf("\033[0;34m");
+}
+void color1 () {
+    printf("\033[1;36m");
+}
+void color3 () {
+    printf("\033[0;35m");
+}
+
+void color2() {
+    printf("\033[1;32m");
+}
+void yellow() {
+    printf("\033[1;33m");
+}
+void green(){
+    printf("\033[0;32m");
+}
+void reset () {
+    printf("\033[0m");
 }

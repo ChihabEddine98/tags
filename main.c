@@ -32,12 +32,13 @@ int main()
     char catName[45];
     char tagNAme[45];
     char tagNAme2[45];
-
+    color3();
     printf("\n\n\t\tSysteme project - Best place to learn\n\n\n");
     int choice, num, i;
     char ch;
     while(1)
     {
+        color1();
         printf("\n1. ajouter catégorie  \n");
         printf("2. ajouter tag dans catégorie\n");
         printf("3. supprimer categorie\n");
@@ -46,23 +47,27 @@ int main()
         printf("6. lien hiérarchique entre deux tag\n");
         printf("7. Afficher les Tags\n");
         printf("8. Exit \n\n\n");
-
+        yellow();
         printf("Enter your choice :  ");
         scanf("%d",&choice);
 
         switch(choice)
         {
             case 1:
+                color2();
                 printf("le chemin du fichier:\n");
                 scanf("%s", fichier);
                 printf("nom de categorie:\n");
                 scanf("%s", catName);
                 printf("%s",fichier);
                 addCategorie(fichier,catName);
+                printf("\n");
+                getchar();
 
                 break;
 
             case 2:
+                color2();
                 printf("le chemin du fichier:\n");
                 scanf("%s", fichier);
                 printf("nom de categorie:\n");
@@ -73,6 +78,7 @@ int main()
 
                 break;
             case 3:
+                color2();
                 printf("le chemin du fichier:\n");
                 scanf("%s", fichier);
                 printf("nom de categorie :\n");
@@ -81,6 +87,7 @@ int main()
 
                 break;
             case 4:
+                color2();
                 printf("le chemin du fichier:\n");
                 scanf("%s", fichier);
                 printf("nom de categorie :\n");
@@ -91,6 +98,7 @@ int main()
 
                 break;
             case 5:
+                color2();
                 printf("le chemin du fichier:\n");
                 scanf("%s", fichier);
                 printf("nom de tag :\n");
@@ -99,6 +107,7 @@ int main()
 
                 break;
             case 6:
+                color2();
                 printf("le chemin du fichier:\n");
                 scanf("%s", fichier);
                 printf("nom de tag 1:\n");
@@ -109,6 +118,7 @@ int main()
 
                 break;
             case 7:
+                color2();
                 printf("le chemin du fichier:\n");
                 scanf("%s", fichier);
                 printf("\n\n");
@@ -118,13 +128,16 @@ int main()
                 break;
 
             case 8:
+                blue();
                 printf("\n\n\t\t\tCoding is Fun !\n\n\n");
                 exit(0);    // terminates the complete program execution
             default:
+                red();
                 printf("default\n\n");
         }
     }
     printf("\n\n\t\t\tCoding is Fun !\n\n\n");
+    reset();
     return 0;
 
 }

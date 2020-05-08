@@ -54,4 +54,16 @@ void low(char str[40]);
 Tags *lienEntreTags(char *Path,char *tag1,char *tag2);
 void lienhierarchique(char *Path,char *tag1,char *tag2);
 int existe(int inode, int cpt, int tab[]);
+void red () ;
+void blue () ;
+void color1 () ;
+void color3 ();
+void color2() ;
+void yellow();
+void green();
+void reset ();
+
+
+
+
 #endif //SYSTPROJET_BIBLIO_H
