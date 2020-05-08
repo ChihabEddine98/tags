@@ -31,6 +31,27 @@ Dans cette méthode si vous lancez **`./tags`** en lui donnant des option en arg
 | **`--search_files`**  | **`-s`** | `CRITERIA`:  critere de recherche    | recherche tous les fichiers qui satisfont le critere   **CRITERIA** à partir d'un chemin donné ou du **`./`** si celui là n'est pas spécifié|
 | **`--search_tags`**  | **`-l`** | `FILE`:  nom du fichier demandé    | affiche la liste de tout les tags lié au fichie **FILE** à le fichier qui se trouve en **FILE_PATH**|
 
+#### La différence entre option & flag dans notre cas :
+##### Exemple 1 : 
+**`./tags -a "Red" -c "Color" ./tests/1.txt`**
+##### Exemple 2: 
+**`./tags --add=Red --category=Color ./tests/1.txt`**
+
+Ces deux exemples permettront d'ajouter le tag **Red** à la categorie **Color**  dans le fichier **./tests/1.txt**
+
+Les deux exemples sont équivalents ! donc n'oubliez pas le petit **`=`** apres le flag ! 
+
+### Pas de panique  !
+Si les options et choix de la commande **`./tags`** sont compliqués et dur à retenir il serait toujours possible de demander de l'aide à notre ami **`./tags --help `** 
+ ou encore  **`./tags -? `** 
+ et pour comment l'utiliser : **`./tags --usage`**
+
+Pour pouvoir créer un nouveau tag il faut lui donner son tag parent **`CATEGORY`** donc deux alternatives sont à votre disposition : 
+soit vous créez la `CATEGORY` avant de lui ajouter le `TAG` en question ou bien au moment de l'ajout d'un `TAG` répondre qu dialogue sur le terminal par le nom de la catégorie que vous voulez !
+
+Afin de supprimer un tag il est possible soit de donner le nom du tag `./tags -d "TAG" FILE_PATH`
+ ou aussi vous pouvez : `./tags -d "TAG" -c "CATEGORY" `
+
 ### Option 2 : **`./tags`**
 Dans cette méthode si vous lancez **`./tags`** sans lui donner d'option ! 
 un petit menu s'affichera vous indiquant tout les choix à votre disposition 
