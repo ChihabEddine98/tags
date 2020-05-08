@@ -24,12 +24,12 @@ Dans cette méthode si vous lancez **`./tags`** en lui donnant des option en arg
 
   |   Option     |Flags|Arguments| Description|
 |-------------------|----------------|-----------------------------|-------|
-| **`--add`**  | **`-a`** | `TAG :  nom du tag à ajouter`    | ajoute le tag **TAG** à le fichier qui se trouve en **FILE_PATH**|
-| **`--delete`**  | **`-d`** | `TAG :  nom du tag à supprimer`    | supprime le tag **TAG** du fichier qui se trouve en **FILE_PATH**|
-| **`--category`**  | **`-c`** | `CATEGORY:  nom de categorie à ajouter`    | ajoute la catégorie **CATEGORY** à le fichier qui se trouve en **FILE_PATH**|
-| **`--delete_category`**  | **`-x`** | `CATEGORY:  nom de categorie à supprimer`    | supprime la catégorie **CATEGORY** du fichier qui se trouve en **FILE_PATH**|
-| **`--search_files`**  | **`-s`** | `CRITERIA:  critere de recherche`    | recherche tous les fichiers qui satisfont le critere   **CRITERIA** à partir d'un chemin donné ou du **`./`** si celui là n'est pas spécifié|
-| **`--search_tags`**  | **`-l`** | `FILE:  nom du fichier demandé `    | affiche la liste de tout les tags lié au fichie **FILE** à le fichier qui se trouve en **FILE_PATH**|
+| **`--add`**  | **`-a`** | `TAG` :  nom du tag à ajouter  | ajoute le tag **TAG** à le fichier qui se trouve en **FILE_PATH**|
+| **`--delete`**  | **`-d`** | `TAG` :  nom du tag à supprimer    | supprime le tag **TAG** du fichier qui se trouve en **FILE_PATH**|
+| **`--category`**  | **`-c`** | `CATEGORY`:  nom de categorie à ajouter    | ajoute la catégorie **CATEGORY** à le fichier qui se trouve en **FILE_PATH**|
+| **`--delete_category`**  | **`-x`** | `CATEGORY`:  nom de categorie à supprimer   | supprime la catégorie **CATEGORY** du fichier qui se trouve en **FILE_PATH**|
+| **`--search_files`**  | **`-s`** | `CRITERIA`:  critere de recherche    | recherche tous les fichiers qui satisfont le critere   **CRITERIA** à partir d'un chemin donné ou du **`./`** si celui là n'est pas spécifié|
+| **`--search_tags`**  | **`-l`** | `FILE`:  nom du fichier demandé    | affiche la liste de tout les tags lié au fichie **FILE** à le fichier qui se trouve en **FILE_PATH**|
 
 ### Option 2 : **`./tags`**
 Dans cette méthode si vous lancez **`./tags`** sans lui donner d'option ! 
