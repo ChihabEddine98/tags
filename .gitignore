@@ -54,6 +54,7 @@ dkms.conf
 
 # mine !
 *.txt
+tags
 cmd
 main
 test
