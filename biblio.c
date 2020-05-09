@@ -33,7 +33,7 @@ int isExistTag(Tags tags, char *tagName)
     {
         if (strcmp(token->tag, tagName) == 0)
             return 1;
-        token = token->suivant;
+        token =(Token*) token->suivant;
     }
     return 0;
 }
@@ -81,7 +81,7 @@ void add(Tags *tags, char *tagName)
 {
     Token *token = malloc(sizeof(Token));
     strcpy(token->tag, tagName);
-    token->suivant = tags->sommet;
+    token->suivant = (struct elem *) tags->sommet;
     tags->sommet = token;
     tags->NbTags += 1;
     return;
@@ -100,14 +100,14 @@ void deletTag(Tags *tags, char *tagName)
         else
         {
             pres = token;
-            token = token->suivant;
+            token =(Token *) token->suivant;
         }
     }
     if (find)
     {
         tags->NbTags -= 1;
         if (pres == token)
-            tags->sommet = token->suivant;
+            tags->sommet = (Token *)token->suivant;
         else
             pres->suivant = token->suivant;
     }
@@ -170,7 +170,7 @@ int findInList(Tags *tags, char *tagName)
 
         if (memcmp(token->tag, tagName,strlen(token->tag)) == 0)
             return 1;
-        token = token->suivant;
+        token =(Token *)  token->suivant;
     }
     return 0;
 }
@@ -205,7 +205,7 @@ char *TagsToBuf(Tags *tags)
         strcat(token->tag, "#");
         strcat(data, token->tag);
         //printf("tag :%s\n", token->tag);
-        token = token->suivant;
+        token = (Token *) token->suivant;
     }
     //printf("\ndata :%s\n", data);
     return data;
@@ -309,7 +309,7 @@ void removeTag(char *Path, char *tagName)
             cnt = 1;
         }
         else
-            tmp = tmp->suivant;
+            tmp =(Token *) tmp->suivant;
     }
 }
 
@@ -336,7 +336,7 @@ void afficher(Tags *tags)
     while (token != NULL)
     {
         printf("  - tag :%s\n", token->tag);
-        token = token->suivant;
+        token =(Token *) token->suivant;
     }
 }
 void afficherhierarchique(Tags *tags){
@@ -346,7 +346,7 @@ void afficherhierarchique(Tags *tags){
     while (token != NULL)
     {
         printf("%s", token->tag);
-        token = token->suivant;
+        token = (Token *) token->suivant;
         if(token!=NULL)
             printf("/");
     }
@@ -383,7 +383,7 @@ void listTag(char *Path)
         listOfTags->sommet = NULL;
         get_tags(listOfTags, Path, token->tag);
         afficher(listOfTags);
-        token = token->suivant;
+        token =(Token *) token->suivant;
     }
 }
 void addListInLIst(Tags *res, Tags *list)
@@ -392,7 +392,7 @@ void addListInLIst(Tags *res, Tags *list)
     while (token != NULL)
     {
         add(res, token->tag);
-        token = token->suivant;
+        token = (Token *) token->suivant;
     }
 }
 Tags *Allsoustags2(char *Path, Tags *listcat)
@@ -408,7 +408,7 @@ Tags *Allsoustags2(char *Path, Tags *listcat)
         listOfTags->sommet = NULL;
         get_tags(listOfTags, Path, tok->tag);
         addListInLIst(res, listOfTags);
-        tok = tok->suivant;
+        tok = (Token *) tok->suivant;
     }
     return res;
 }
@@ -426,7 +426,7 @@ Tags *Allsoustags(char *Path, Tags *listcat)
         get_tags(listOfTags, Path, tok->tag);
         add(res, tok->tag);
         addListInLIst(res, listOfTags);
-        tok = tok->suivant;
+        tok = (Token *) tok->suivant;
     }
     return res;
 }
@@ -490,7 +490,7 @@ char *paireTag(char *Path,char *tag1){
         listOfTags->sommet = NULL;
         get_tags(listOfTags, Path, token->tag);
         if(findInList(listOfTags,tag1)) return token->tag;
-        token = token->suivant;
+        token =(Token *) token->suivant;
     }
     return "";
 }

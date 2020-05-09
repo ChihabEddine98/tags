@@ -204,7 +204,7 @@ void printCriteriaT(search_criteria_t criteria)
   
 void menu()
 {
-  char fichier[85];
+      char fichier[85];
     char catName[45];
     char tagNAme[45];
     char tagNAme2[45];
@@ -212,6 +212,7 @@ void menu()
     printf("\n\n\t\tSysteme project - Best place to learn\n\n\n");
     int choice, num, i;
     char ch;
+    char ch1[3];
     while(1)
     {
         color1();
@@ -225,8 +226,8 @@ void menu()
         printf("8. Exit \n\n\n");
         yellow();
         printf("Enter your choice :  ");
-        scanf("%d",&choice);
-
+        scanf("%s",ch1);
+        choice=atoi(ch1);
         switch(choice)
         {
             case 1:
@@ -235,10 +236,10 @@ void menu()
                 scanf("%s", fichier);
                 printf("nom de categorie:\n");
                 scanf("%s", catName);
-                printf("%s",fichier);
+               // printf("%s",fichier);
                 addCategorie(fichier,catName);
-                printf("\n");
-                getchar();
+                goBackMenu();
+
 
                 break;
 
@@ -251,6 +252,8 @@ void menu()
                 printf("nom de tag :\n");
                 scanf("%s", tagNAme);
                 addTagInCategorie(fichier,catName,tagNAme);
+                goBackMenu();
+
 
                 break;
             case 3:
@@ -260,6 +263,8 @@ void menu()
                 printf("nom de categorie :\n");
                 scanf("%s", catName);
                 supprimerCategorie(fichier,catName);
+                goBackMenu();
+
 
                 break;
             case 4:
@@ -271,6 +276,8 @@ void menu()
                 printf("nom de tag :\n");
                 scanf("%s", tagNAme);
                 removeTagCategory(fichier,catName,tagNAme);
+                goBackMenu();
+
 
                 break;
             case 5:
@@ -280,6 +287,8 @@ void menu()
                 printf("nom de tag :\n");
                 scanf("%s", tagNAme);
                 removeTag(fichier,tagNAme);
+                goBackMenu();
+
 
                 break;
             case 6:
@@ -291,6 +300,9 @@ void menu()
                 printf("nom de tag 2:\n");
                 scanf("%s", tagNAme2);
                 lienhierarchique(fichier,tagNAme,tagNAme2);
+                goBackMenu();
+
+
 
                 break;
             case 7:
@@ -299,8 +311,9 @@ void menu()
                 scanf("%s", fichier);
                 printf("\n\n");
                 listTag(fichier);
-                printf("\n\n");
+                goBackMenu();
 
+                
                 break;
 
             case 8:
@@ -309,12 +322,21 @@ void menu()
                 exit(0);    // terminates the complete program execution
             default:
                 red();
-                printf("default\n\n");
+                printf("Ooops ! wrong try !!\n\n");
         }
     }
     printf("\n\n\t\t\tCoding is Fun !\n\n\n");
     reset();
  
+}
+
+void goBackMenu()
+{               
+  printf("\n\n");
+  printf("Press enter to continue...\n");
+  fflush(stdin);
+  getchar();
+  getchar();
 }
 
 /* Parse a single option. */
