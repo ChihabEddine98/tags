@@ -103,6 +103,7 @@ search_criteria_t tokenize( char **result, char *working, const char *src, const
      char *p=NULL;
      size_t len=strlen(delim);     
      strcpy(working, src);
+
      p=working;
      for(result[i]=NULL, p=iterate(p, delim, len); p!=NULL && *p; p=iterate(p, delim, len) )
      {
@@ -129,52 +130,15 @@ search_criteria_t tokenize( char **result, char *working, const char *src, const
        || strstr(result[k],"Not") || strstr(result[k],"NOT")|| strstr(result[k],"not")
        || strstr(result[k],"Pas") || strstr(result[k],"PAS")|| strstr(result[k],"pas") ) 
        {
-          // char *justNot=&result[k][5];
-         //char motifNot[strlen(justNot)-1]; 
-        //  for (size_t j = 0; j < strlen(justNot)-2; j++) 
-        //  {
-        //     motifNot[j]=justNot[j];
-        //  }
-        //  motifNot[strlen(justNot)-2]='\0';
-
-        //  printf("\n motif == %s ==",motifNot);
-        //  search_criteria_result.not_in[i]=malloc(sizeof(motifNot));
-        //  search_criteria_result.not_in[i]=motifNot;
-        //  printf("\n == %s ==",search_criteria_result.not_in[i]);
-
-        //  search_criteria_result.not_in_size+=1;
-
-
-        //  char motifNot[strlen(justNot)-1]; 
-        //  search_criteria_result.not_in[i]=malloc(strlen(justNot)-1);
-        //  for (size_t j = 0; j < strlen(justNot)-2; j++) 
-        //  {
-        //     search_criteria_result.not_in[i][j]=justNot[j];
-        //  }
-        // search_criteria_result.not_in[i][strlen(justNot)-2]='\0';
-        // printf("\n == %s ==",search_criteria_result.not_in[i]);
-        // search_criteria_result.not_in_size+=1;
           char* s=str_splitBetweenParentheses(result[k],'(');
           char *motifNot=malloc(strlen(s));
           motifNot=s;
-          // for (size_t i = 0; i < strlen(s)- ;i++)
-          // {
-          //   motifNot[i]=s[i];
-          // }
 
           motifNot[strlen(s)-1]='\0';
           if (motifNot[strlen(s)-1]==')')
           {
             motifNot[strlen(s)-1]='\0';
           }
-          
-          // replace_char(motifNot,')','\0');
-         
-          
-          
-          // strncpy ( motifNot, &result[k][5],strlen(justNot)-1);
-          // motifNot[strlen(justNot)]='\0';
-          // search_criteria_result.not_in[i]=malloc(sizeof(motifNot));
           search_criteria_result.not_in[i]=motifNot;
          search_criteria_result.not_in_size+=1;
          i++;
@@ -211,7 +175,122 @@ void printCriteriaT(search_criteria_t criteria)
     printf("-- %s --\n",criteria.not_in[i]);
   }
 }
+
   
+void menu()
+{
+  char fichier[85];
+    char catName[45];
+    char tagNAme[45];
+    char tagNAme2[45];
+    color3();
+    printf("\n\n\t\tSysteme project - Best place to learn\n\n\n");
+    int choice, num, i;
+    char ch;
+    while(1)
+    {
+        color1();
+        printf("\n1. ajouter catégorie  \n");
+        printf("2. ajouter tag dans catégorie\n");
+        printf("3. supprimer categorie\n");
+        printf("4. supprimer tag dans catégorie \n");
+        printf("5. supprimer tag\n");
+        printf("6. lien hiérarchique entre deux tag\n");
+        printf("7. Afficher les Tags\n");
+        printf("8. Exit \n\n\n");
+        yellow();
+        printf("Enter your choice :  ");
+        scanf("%d",&choice);
+
+        switch(choice)
+        {
+            case 1:
+                color2();
+                printf("le chemin du fichier:\n");
+                scanf("%s", fichier);
+                printf("nom de categorie:\n");
+                scanf("%s", catName);
+                printf("%s",fichier);
+                addCategorie(fichier,catName);
+                printf("\n");
+                getchar();
+
+                break;
+
+            case 2:
+                color2();
+                printf("le chemin du fichier:\n");
+                scanf("%s", fichier);
+                printf("nom de categorie:\n");
+                scanf("%s", catName);
+                printf("nom de tag :\n");
+                scanf("%s", tagNAme);
+                addTagInCategorie(fichier,catName,tagNAme);
+
+                break;
+            case 3:
+                color2();
+                printf("le chemin du fichier:\n");
+                scanf("%s", fichier);
+                printf("nom de categorie :\n");
+                scanf("%s", catName);
+                supprimerCategorie(fichier,catName);
+
+                break;
+            case 4:
+                color2();
+                printf("le chemin du fichier:\n");
+                scanf("%s", fichier);
+                printf("nom de categorie :\n");
+                scanf("%s", catName);
+                printf("nom de tag :\n");
+                scanf("%s", tagNAme);
+                removeTagCategory(fichier,catName,tagNAme);
+
+                break;
+            case 5:
+                color2();
+                printf("le chemin du fichier:\n");
+                scanf("%s", fichier);
+                printf("nom de tag :\n");
+                scanf("%s", tagNAme);
+                removeTag(fichier,tagNAme);
+
+                break;
+            case 6:
+                color2();
+                printf("le chemin du fichier:\n");
+                scanf("%s", fichier);
+                printf("nom de tag 1:\n");
+                scanf("%s", tagNAme);
+                printf("nom de tag 2:\n");
+                scanf("%s", tagNAme2);
+                lienhierarchique(fichier,tagNAme,tagNAme2);
+
+                break;
+            case 7:
+                color2();
+                printf("le chemin du fichier:\n");
+                scanf("%s", fichier);
+                printf("\n\n");
+                listTag(fichier);
+                printf("\n\n");
+
+                break;
+
+            case 8:
+                blue();
+                printf("\n\n\t\t\tCoding is Fun !\n\n\n");
+                exit(0);    // terminates the complete program execution
+            default:
+                red();
+                printf("default\n\n");
+        }
+    }
+    printf("\n\n\t\t\tCoding is Fun !\n\n\n");
+    reset();
+ 
+}
 
 /* Parse a single option. */
 static error_t parse_opt (int key, char *arg, struct argp_state *state)
@@ -270,8 +349,7 @@ static error_t parse_opt (int key, char *arg, struct argp_state *state)
       return ARGP_ERR_UNKNOWN;
     }
 
-    // MENU HERE !
-    // printf("Menu \n");
+
 
   return 0;
 }
@@ -301,6 +379,15 @@ int main (int argc, char **argv)
      be reflected in arguments. */
   argp_parse (&argp, argc, argv, 0, 0, &arguments);
 
+  // MENU HERE !
+  if (!arguments.rm_tag && !arguments.rm_category 
+      && !arguments.add_tag && !arguments.search_files_criteria 
+      && !arguments.search_tags_criteria && !arguments.add_category)
+  {
+    menu();
+  }
+
+  
   // Case of tag -d TAG -c CATEGORY file.txt
   if(arguments.rm_tag)
   {
@@ -325,11 +412,12 @@ int main (int argc, char **argv)
     printf("\n Are you sure ? (y/n)");
     printf("\n>>");
     scanf("%[^'\n']s",catego_tmp);
-
-    if(strcmp(catego_tmp,"y")== 0 || strcmp(catego_tmp,"Y")== 0 || strcmp(catego_tmp,"yes")== 0 ||strcmp(catego_tmp,"YES")== 0)
+    low(catego_tmp);
+    if(strcmp(catego_tmp,"y")== 0 || strcmp(catego_tmp,"yes")== 0)
     {
       supprimerCategorie(arguments.args[0],arguments.rm_category);
     } 
+    printf("\n");
     listTag(arguments.args[0]);
   }
 
@@ -372,10 +460,10 @@ int main (int argc, char **argv)
 
   if (arguments.search_files_criteria)
   {
-    printf("\n yoooohooo searching !\n  %s  \n",arguments.search_files_criteria);
-    char** res=malloc(500);
-    char* w=malloc(500);
-    search_criteria_t search_criteria_result =tokenize(res,w,arguments.search_files_criteria,"et");
+    printf("\n searching !\n---------------\n  %s  \n",arguments.search_files_criteria);
+    char** res=malloc(1000);
+    char* w=malloc(1000);
+    search_criteria_t search_criteria_result =tokenize(res,w,arguments.search_files_criteria,"et ");
   
     printCriteriaT(search_criteria_result);
 
@@ -385,14 +473,6 @@ int main (int argc, char **argv)
     free(res);
     free(w);
     
-
-    // char * strToken = strtok ( arguments.search_files_criteria, delimit );
-    // while ( strToken != NULL ) {
-    //     printf ( "%s\n", strToken );
-    //     // On demande le token suivant.
-    //     strToken = strtok ( NULL, delimit );
-    // }
-  
     
   }
 
@@ -403,7 +483,6 @@ int main (int argc, char **argv)
   {
     listTag(arguments.search_tags_criteria);
   }
-  
   
 
   // printf ("FILE = %s\nADDED_TAG = %s\n"

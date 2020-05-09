@@ -164,7 +164,11 @@ int findInList(Tags *tags, char *tagName)
     Token *token = tags->sommet;
     while (token != NULL)
     {
-        if (strcmp(token->tag, tagName) == 0)
+        printf(" \n token : [%s]  ",token->tag);
+        printf(" \n tagName : [%s]  ",tagName);
+        printf(" \n memCmp : %d ",memcmp(token->tag, tagName,strlen(token->tag)));
+
+        if (memcmp(token->tag, tagName,strlen(token->tag)) == 0)
             return 1;
         token = token->suivant;
     }
@@ -371,7 +375,7 @@ void listTag(char *Path)
     while (token != NULL)
     {
         red();
-        printf(" Categorie :");
+        printf("\nCategorie :");
         yellow();
         printf("%s\n", token->tag);
         Tags *listOfTags = malloc(sizeof(Tags));
@@ -530,6 +534,20 @@ void lienhierarchique(char *Path,char *tag1,char *tag2){
         afficherhierarchique(list2);
     }else printf("\nil n'y a pas de lien");
 }
+void printCriteria(search_criteria_t criteria)
+{
+  printf("\n Searched for :\n");
+  for (size_t i = 0; i < criteria.in_size; i++)
+  {
+    printf("-- [%s] --\n",criteria.in[i]);
+  }
+  
+  printf("\n And Not  :\n");
+  for (size_t i = 0; i < criteria.not_in_size; i++)
+  {
+    printf("-- [%s] --\n",criteria.not_in[i]);
+  }
+}
 
 void listFilesRecursively(char *basePath, search_criteria_t criteria)
 {
@@ -543,14 +561,17 @@ void listFilesRecursively(char *basePath, search_criteria_t criteria)
 
     // Unable to open directory stream
     if (!dir)
+    {
         return;
+    }
+        
 
     while ((dp = readdir(dir)) != NULL)
     {
 
         if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
         {
-
+             
             if (testCriteria(dp->d_name, criteria) == 1)
             {
                 stat(dp->d_name, &res1);

@@ -43,8 +43,10 @@ int main(int argc, char *argv[])
             perror("stat");
         }
 
-        printf("%s\n", fichierLu->d_name);
+        printf("------------------------\n");
+        printf("%s", fichierLu->d_name);
         listTag(fichierLu->d_name);
+
     }
 
     return 1;
