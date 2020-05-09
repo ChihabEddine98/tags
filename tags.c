@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "biblio.h"
-#include "cmd.h"
+#include "tags.h"
 
 char* str_splitBetweenParentheses(char* a_str, const char a_delim)
 {
@@ -531,13 +531,5 @@ int main (int argc, char **argv)
     listTag(arguments.search_tags_criteria);
   }
   
-
-  // printf ("FILE = %s\nADDED_TAG = %s\n"
-  //         "REMOVED_TAG = %s\nADDED_CATEGORY = %s\n",
-  //         arguments.args[0],
-  //         arguments.add_tag,
-  //         arguments.rm_tag ? arguments.rm_tag:"no_rm",
-  //         arguments.add_category? arguments.add_category:"no_add_category");
-
   exit (0);
 }
