@@ -36,6 +36,7 @@ int main()
     printf("\n\n\t\tSysteme project - Best place to learn\n\n\n");
     int choice, num, i;
     char ch;
+    char ch1[3];
     while(1)
     {
         color1();
@@ -49,8 +50,8 @@ int main()
         printf("8. Exit \n\n\n");
         yellow();
         printf("Enter your choice :  ");
-        scanf("%d",&choice);
-
+        scanf("%s",ch1);
+        choice=atoi(ch1);
         switch(choice)
         {
             case 1:
@@ -59,7 +60,7 @@ int main()
                 scanf("%s", fichier);
                 printf("nom de categorie:\n");
                 scanf("%s", catName);
-                printf("%s",fichier);
+               // printf("%s",fichier);
                 addCategorie(fichier,catName);
                 printf("\n");
                 getchar();

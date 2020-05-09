@@ -97,6 +97,25 @@ char* replace_char(char* str, char find, char replace){
     return str;
 }
 
+char *ltrim(char *s)
+{
+    while(isspace(*s)) s++;
+    return s;
+}
+
+char *rtrim(char *s)
+{
+    char* back = s + strlen(s);
+    while(isspace(*--back));
+    *(back+1) = '\0';
+    return s;
+}
+
+char *trim(char *s)
+{
+    return rtrim(ltrim(s));
+}
+
 search_criteria_t tokenize( char **result, char *working, const char *src, const char *delim)
 {
      int i=0;
@@ -111,6 +130,7 @@ search_criteria_t tokenize( char **result, char *working, const char *src, const
          result[i]=NULL;
          p=strstr(p, delim);
      }
+
      int cpt=i;
      search_criteria_t search_criteria_result;
      search_criteria_result.in=malloc(cpt+1);
@@ -121,14 +141,19 @@ search_criteria_t tokenize( char **result, char *working, const char *src, const
      i=0;
      size_t j=0;
      size_t k=0;
-           
+     char *tmpp;
+    for (int l = 0; l <cpt ; l++) {
+        tmpp=trim(result[l]);
+        result[l]=tmpp;
+    }
      for (k = 0;k < cpt;k++)
      {
+         printf("\n K=[%s]",result[k]);
 
 
        if(strstr(result[k],"Non") || strstr(result[k],"NON")|| strstr(result[k],"non")
        || strstr(result[k],"Not") || strstr(result[k],"NOT")|| strstr(result[k],"not")
-       || strstr(result[k],"Pas") || strstr(result[k],"PAS")|| strstr(result[k],"pas") ) 
+       || strstr(result[k],"Pas") || strstr(result[k],"PAS")|| strstr(result[k],"pas") )
        {
           char* s=str_splitBetweenParentheses(result[k],'(');
           char *motifNot=malloc(strlen(s));
@@ -463,7 +488,7 @@ int main (int argc, char **argv)
     printf("\n searching !\n---------------\n  %s  \n",arguments.search_files_criteria);
     char** res=malloc(1000);
     char* w=malloc(1000);
-    search_criteria_t search_criteria_result =tokenize(res,w,arguments.search_files_criteria,"et ");
+    search_criteria_t search_criteria_result =tokenize(res,w,arguments.search_files_criteria,"et");
   
     printCriteriaT(search_criteria_result);
 

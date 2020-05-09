@@ -164,9 +164,9 @@ int findInList(Tags *tags, char *tagName)
     Token *token = tags->sommet;
     while (token != NULL)
     {
-        printf(" \n token : [%s]  ",token->tag);
-        printf(" \n tagName : [%s]  ",tagName);
-        printf(" \n memCmp : %d ",memcmp(token->tag, tagName,strlen(token->tag)));
+      //  printf(" \n token : [%s]  ",token->tag);
+       // printf(" \n tagName : [%s]  ",tagName);
+       // printf(" \n memCmp : %d ",memcmp(token->tag, tagName,strlen(token->tag)));
 
         if (memcmp(token->tag, tagName,strlen(token->tag)) == 0)
             return 1;
@@ -439,14 +439,20 @@ int testCriteria(char *Path, search_criteria_t criteria)
     Tags *listcat = malloc(sizeof(Tags));
     listcat->NbTags = 0;
     listcat->sommet = NULL;
+   // printf("\n %d",size);
     if (size > 0)
     {
+
         ListOfTags(listcat, buff, size);
     }
+   // printf(" \n int : %d  and name %s\n",listcat->sommet==NULL,Path);
+
     if (listcat->sommet == NULL)
         return 0;
     Tags *listall = Allsoustags(Path, listcat);
-    //printf(" \n int : %d  and name %s\n",listall->NbTags,Path);
+
+
+   // printf(" \n  name %s\n",Path);
     for (size_t i = 0; i < criteria.in_size; i++)
     {
         if (findInList(listall, criteria.in[i]) == 0)
@@ -571,13 +577,15 @@ void listFilesRecursively(char *basePath, search_criteria_t criteria)
 
         if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
         {
-             
-            if (testCriteria(dp->d_name, criteria) == 1)
+           //printf("\n in the head %s/%s",basePath,dp->d_name);
+           char buff[1024];
+           sprintf(buff,"%s/%s",basePath,dp->d_name);
+            if (testCriteria(buff, criteria) == 1)
             {
                 stat(dp->d_name, &res1);
                 if (existe(res1.st_ino, cpt, inodes) == 0)
                 {
-                    printf("{ %s } satisfy the criteria ! \n", dp->d_name);
+                    printf("{ %s } satisfy the criteria ! \n", buff);
                     inodes[cpt] = res1.st_ino;
                     cpt++;
                 }
