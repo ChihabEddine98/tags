@@ -63,3 +63,8 @@ Si les options et choix de la commande **`./tags`** sont compliqués et dur à r
 ### Option 2 : **`./tags`**
 Dans cette méthode si vous lancez **`./tags`** sans lui donner d'option ! 
 un petit menu s'affichera vous indiquant tout les choix à votre disposition 
+
+```c
+char* s = "C syntax highlighting"
+printf(s)
+```
