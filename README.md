@@ -66,9 +66,10 @@ un petit menu s'affichera vous indiquant tout les choix à votre disposition
 
 # Comment on a fait !
 ### Structures utilsées :
+Dans notre implémentation, on a choisi de stocker les tags dans des catégories, par défaut la catégorie d'un tag c'est le tag lui meme.
+la liste des tags est une chaine de caractere contenant des mots séparés par des '#'.
+Pour gérer les tags, on récupere d'abord la liste des tags du fichier dans une pile de Token appelé 'Tags' qui a la structure suivante : 
 
-##### Gestion des tags :
-**` Token :`** **TODO BY MEHDI !**
 ```c
 struct Token
 {
@@ -76,7 +77,6 @@ struct Token
 	struct  elem  *suivant;
 }
 ```
-**` Tags :`** **TODO BY MEHDI**
 ```c
 struct Tags
 {
@@ -84,6 +84,57 @@ struct Tags
 	int NbTags;
 }
 ```
+#### Gestion des tags :
+
+##### Ajout :
+Pour taguer un fichier, l'utilisateur doit donner le tag, la catégorie ainsi que le chemin du fichier qu'il veut taguer.
+Pour cela, on a implémenté les fonctions suivantes  : 
+
+
+```c
+void init_tags(Tags  *tags, char  buf[MAXLEN]);
+```
+Cette fonction initliaise la structure Tags.
+```c
+void addCategorie(char  *Path, char  *tagName);
+```
+Cette fonction ajoute une catégorie au fichier.
+```c
+void addTagInCategorie(char  *Path, char  *category, char  *tagName);
+```
+Cette fonction ajoute un tag à une catégorie.
+
+##### Suppression :
+Pour supprimer des catégories ou des tags d'un fichier, on les récupere d'abord dans une pile, on la parcoure par la suite pour trouver le tag ou la catégorie recherchée.
+Pour cela, on a implémenté les fonctions suivantes  : 
+
+```c
+void supprimerCategorie(char  *Path, char  *category);
+```
+- Supprime une catégorie donnée en parametre.
+```c
+void removeTagCategory(char  *Path, char  *category, char  *tagName);
+```
+- Supprime un tag d'une catégorie passée en argument d'un fichier.
+
+```c
+void removeTag(char  *Path, char  *tagName);
+```
+- Supprime un tag d'un fichier.
+
+##### Affichage :
+Pour l'affichage, on a implémenté les fonctions suivantes qui permettent d'affichier tous les tags d'un fichier, nous préciserons ulterierement, comment on procede 
+pour afficher les tags selon des criteres.
+- fonctions utilisées : 
+
+```c
+void afficher(Tags  *tags);
+```
+```c
+void listTag(char  *Path);
+```
+
+
 ---
 
 ##### Gestion de la recherche des fichiers selon des tags : 
