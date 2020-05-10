@@ -64,7 +64,117 @@ Si les options et choix de la commande **`./tags`** sont compliqués et dur à r
 Dans cette méthode si vous lancez **`./tags`** sans lui donner d'option ! 
 un petit menu s'affichera vous indiquant tout les choix à votre disposition 
 
+# Comment on a fait !
+### Structures utilsées :
+
+##### Gestion des tags :
+**` Token :`** **TODO BY MEHDI !**
 ```c
-char* s = "C syntax highlighting"
-printf(s)
+struct Token
+{
+	char  tag[30];
+	struct  elem  *suivant;
+}
 ```
+**` Tags :`** **TODO BY MEHDI**
+```c
+struct Tags
+{
+	Token *sommet;
+	int NbTags;
+}
+```
+---
+
+##### Gestion de la recherche des fichiers selon des tags : 
+**` search_creteria :`** cette structure comme définit ci dessous contient des listes de mots à rechercher **`in`** et d'autres à ne pas  **`not_in`**! 
+```c
+struct search_criteria
+{
+	char  **in; 
+	char  **not_in;
+	int in_size;
+	int not_in_size;
+}
+```
+**`arguments :`** cette structure sert à parser les commandes si on utlise **`option1`** de tags avec des options & des flags en paramètres !
+```c
+struct  arguments
+{
+	char  *args[1]; /* FILE PATH */
+	char  *add_tag; /* --add Or  -a */
+	char  *rm_tag;  /* --delete Or -d */
+	char  *add_category; /* --category Or -c */
+	char  *rm_category; /* --delete_category Or -x */
+	char  *search_files_criteria; /* --search Or -s */
+	char  *search_tags_criteria; /* --list Or  -l */
+}
+```
+---
+
+# Algos implementés :
+**DETAILS BY MEHDI & ME & AYMEN**
+```c
+void init_tags(Tags  *tags, char  buf[MAXLEN]);
+```
+```c
+void add(Tags  *tags, char  *tagName);
+```
+```c
+void deletTag(Tags  *tags, char  *tagName);
+```
+```c
+void set_tags(char  *Path, char  data[MAXLEN], char  *tagName, int rep);
+```
+```c
+void get_tags(Tags  *tags, char  *Path, char  *tagName);
+```
+```c
+void ListOfTags(Tags  *tableau, char  buff[MAXLEN], int  size);
+```
+```c
+int findInList(Tags  *tags, char  *tagName);
+```
+```c
+void addCategorie(char  *Path, char  *tagName);
+```
+```c
+void addTagInCategorie(char  *Path, char  *category, char  *tagName);
+```
+```c
+void supprimerCategorie(char  *Path, char  *category);
+```
+```c
+void removeTagCategory(char  *Path, char  *category, char  *tagName);
+```
+```c
+void afficher(Tags  *tags);
+```
+```c
+void listTag(char  *Path);
+```
+```c
+void removeTag(char  *Path, char  *tagName);
+```
+```c
+int contientTag(char  *Path, char  *tag);
+```
+```c
+Tags  *Allsoustags(char  *Path, Tags  *listcat);
+```
+```c
+int testCriteria(char  *Path, search_criteria_t criteria);
+```
+```c
+void listFilesRecursively(char  *basePath, search_criteria_t criteria);
+```
+```c
+void low(char  str[40]);
+```
+```c
+Tags  *lienEntreTags(char  *Path,char  *tag1,char  *tag2);
+```
+```c
+void lienhierarchique(char  *Path,char  *tag1,char  *tag2);
+```
+
