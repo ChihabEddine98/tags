@@ -33,7 +33,7 @@ int isExistTag(Tags tags, char *tagName)
     {
         if (strcmp(token->tag, tagName) == 0)
             return 1;
-        token =(Token*) token->suivant;
+        token = (Token *)token->suivant;
     }
     return 0;
 }
@@ -81,7 +81,7 @@ void add(Tags *tags, char *tagName)
 {
     Token *token = malloc(sizeof(Token));
     strcpy(token->tag, tagName);
-    token->suivant = (struct elem *) tags->sommet;
+    token->suivant = (struct elem *)tags->sommet;
     tags->sommet = token;
     tags->NbTags += 1;
     return;
@@ -100,7 +100,7 @@ void deletTag(Tags *tags, char *tagName)
         else
         {
             pres = token;
-            token =(Token *) token->suivant;
+            token = (Token *)token->suivant;
         }
     }
     if (find)
@@ -164,13 +164,13 @@ int findInList(Tags *tags, char *tagName)
     Token *token = tags->sommet;
     while (token != NULL)
     {
-      //  printf(" \n token : [%s]  ",token->tag);
-       // printf(" \n tagName : [%s]  ",tagName);
-       // printf(" \n memCmp : %d ",memcmp(token->tag, tagName,strlen(token->tag)));
+        //  printf(" \n token : [%s]  ",token->tag);
+        // printf(" \n tagName : [%s]  ",tagName);
+        // printf(" \n memCmp : %d ",memcmp(token->tag, tagName,strlen(token->tag)));
 
-        if (memcmp(token->tag, tagName,strlen(token->tag)) == 0)
+        if (memcmp(token->tag, tagName, strlen(token->tag)) == 0)
             return 1;
-        token =(Token *)  token->suivant;
+        token = (Token *)token->suivant;
     }
     return 0;
 }
@@ -205,7 +205,7 @@ char *TagsToBuf(Tags *tags)
         strcat(token->tag, "#");
         strcat(data, token->tag);
         //printf("tag :%s\n", token->tag);
-        token = (Token *) token->suivant;
+        token = (Token *)token->suivant;
     }
     //printf("\ndata :%s\n", data);
     return data;
@@ -300,7 +300,7 @@ void removeTag(char *Path, char *tagName)
         get_tags(listOfTags, Path, tmp->tag);
         if (findInList(listOfTags, tagName))
         {
-           // printf("\nremove\n");
+            // printf("\nremove\n");
             deletTag(listOfTags, tagName);
             char *buffer;
             buffer = TagsToBuf(listOfTags);
@@ -309,7 +309,7 @@ void removeTag(char *Path, char *tagName)
             cnt = 1;
         }
         else
-            tmp =(Token *) tmp->suivant;
+            tmp = (Token *)tmp->suivant;
     }
 }
 
@@ -320,13 +320,15 @@ void supprimerCategorie(char *Path, char *category)
     sprintf(buf, "user.%s", category);
     int supr = removexattr(fichier, buf);
     if (supr == 0)
-    {   green();
+    {
+        green();
         printf("success ,supprimer Categorie ");
     }
-    else{
+    else
+    {
         red();
         printf("Error ,supprimer Categorie ");
-}
+    }
 }
 
 void afficher(Tags *tags)
@@ -336,22 +338,22 @@ void afficher(Tags *tags)
     while (token != NULL)
     {
         printf("  - tag :%s\n", token->tag);
-        token =(Token *) token->suivant;
+        token = (Token *)token->suivant;
     }
 }
-void afficherhierarchique(Tags *tags){
+void afficherhierarchique(Tags *tags)
+{
     Token *token = tags->sommet;
     printf("\n");
 
     while (token != NULL)
     {
         printf("%s", token->tag);
-        token = (Token *) token->suivant;
-        if(token!=NULL)
+        token = (Token *)token->suivant;
+        if (token != NULL)
             printf("/");
     }
     printf("\n");
-
 }
 
 void listTag(char *Path)
@@ -383,7 +385,7 @@ void listTag(char *Path)
         listOfTags->sommet = NULL;
         get_tags(listOfTags, Path, token->tag);
         afficher(listOfTags);
-        token =(Token *) token->suivant;
+        token = (Token *)token->suivant;
     }
 }
 void addListInLIst(Tags *res, Tags *list)
@@ -392,7 +394,7 @@ void addListInLIst(Tags *res, Tags *list)
     while (token != NULL)
     {
         add(res, token->tag);
-        token = (Token *) token->suivant;
+        token = (Token *)token->suivant;
     }
 }
 Tags *Allsoustags2(char *Path, Tags *listcat)
@@ -408,7 +410,7 @@ Tags *Allsoustags2(char *Path, Tags *listcat)
         listOfTags->sommet = NULL;
         get_tags(listOfTags, Path, tok->tag);
         addListInLIst(res, listOfTags);
-        tok = (Token *) tok->suivant;
+        tok = (Token *)tok->suivant;
     }
     return res;
 }
@@ -426,7 +428,7 @@ Tags *Allsoustags(char *Path, Tags *listcat)
         get_tags(listOfTags, Path, tok->tag);
         add(res, tok->tag);
         addListInLIst(res, listOfTags);
-        tok = (Token *) tok->suivant;
+        tok = (Token *)tok->suivant;
     }
     return res;
 }
@@ -439,20 +441,19 @@ int testCriteria(char *Path, search_criteria_t criteria)
     Tags *listcat = malloc(sizeof(Tags));
     listcat->NbTags = 0;
     listcat->sommet = NULL;
-   // printf("\n %d",size);
+    // printf("\n %d",size);
     if (size > 0)
     {
 
         ListOfTags(listcat, buff, size);
     }
-   // printf(" \n int : %d  and name %s\n",listcat->sommet==NULL,Path);
+    // printf(" \n int : %d  and name %s\n",listcat->sommet==NULL,Path);
 
     if (listcat->sommet == NULL)
         return 0;
     Tags *listall = Allsoustags(Path, listcat);
 
-
-   // printf(" \n  name %s\n",Path);
+    // printf(" \n  name %s\n",Path);
     for (size_t i = 0; i < criteria.in_size; i++)
     {
         if (findInList(listall, criteria.in[i]) == 0)
@@ -467,7 +468,8 @@ int testCriteria(char *Path, search_criteria_t criteria)
 
     return 1;
 }
-char *paireTag(char *Path,char *tag1){
+char *paireTag(char *Path, char *tag1)
+{
     const char *fichier = Path;
     char buff[MAXLEN];
     int size = listxattr(fichier, buff, sizeof(buff));
@@ -489,12 +491,14 @@ char *paireTag(char *Path,char *tag1){
         listOfTags->NbTags = 0;
         listOfTags->sommet = NULL;
         get_tags(listOfTags, Path, token->tag);
-        if(findInList(listOfTags,tag1)) return token->tag;
-        token =(Token *) token->suivant;
+        if (findInList(listOfTags, tag1))
+            return token->tag;
+        token = (Token *)token->suivant;
     }
     return "";
 }
-Tags *lienEntreTags(char *Path,char *tag1,char *tag2){
+Tags *lienEntreTags(char *Path, char *tag1, char *tag2)
+{
     const char *fichier = Path;
     char buff[MAXLEN];
     int size = listxattr(fichier, buff, sizeof(buff));
@@ -508,85 +512,95 @@ Tags *lienEntreTags(char *Path,char *tag1,char *tag2){
     if (listcat->sommet == NULL)
         return NULL;
     Tags *listall = Allsoustags2(Path, listcat);
-    int count=1;
-    char *tagtmp=malloc(45);
-    memcpy(tagtmp,tag2,strlen(tag2));
+    int count = 1;
+    char *tagtmp = malloc(45);
+    memcpy(tagtmp, tag2, strlen(tag2));
     Tags *res = malloc(sizeof(Tags));
     res->NbTags = 0;
     res->sommet = NULL;
-    for (int j = 0; j <10 ; j++) {
-        if(strcmp(tagtmp,tag1)==0){
-            add(res,tag1);
+    for (int j = 0; j < 10; j++)
+    {
+        if (strcmp(tagtmp, tag1) == 0)
+        {
+            add(res, tag1);
             break;
         }
-        else if(findInList(listall,tagtmp)){
-            add(res,tagtmp);
-            if(strcmp(paireTag(Path,tagtmp),"")==0)
+        else if (findInList(listall, tagtmp))
+        {
+            add(res, tagtmp);
+            if (strcmp(paireTag(Path, tagtmp), "") == 0)
                 return NULL;
-            strcpy(tagtmp,paireTag(Path,tagtmp));
-        } else {
+            strcpy(tagtmp, paireTag(Path, tagtmp));
+        }
+        else
+        {
             return NULL;
         }
     }
     return res;
-
 }
-void lienhierarchique(char *Path,char *tag1,char *tag2){
-    Tags *list1=lienEntreTags(Path,tag1,tag2);
-    Tags *list2=lienEntreTags(Path,tag2,tag1);
-    if(list1!=NULL){
-     afficherhierarchique(list1);
-    }else if (list2!=NULL){
+void lienhierarchique(char *Path, char *tag1, char *tag2)
+{
+    Tags *list1 = lienEntreTags(Path, tag1, tag2);
+    Tags *list2 = lienEntreTags(Path, tag2, tag1);
+    if (list1 != NULL)
+    {
+        afficherhierarchique(list1);
+    }
+    else if (list2 != NULL)
+    {
         afficherhierarchique(list2);
-    }else printf("\nil n'y a pas de lien");
+    }
+    else
+        printf("\nil n'y a pas de lien");
 }
 void printCriteria(search_criteria_t criteria)
 {
-  printf("\n Searched for :\n");
-  for (size_t i = 0; i < criteria.in_size; i++)
-  {
-    printf("-- [%s] --\n",criteria.in[i]);
-  }
-  
-  printf("\n And Not  :\n");
-  for (size_t i = 0; i < criteria.not_in_size; i++)
-  {
-    printf("-- [%s] --\n",criteria.not_in[i]);
-  }
+    printf("\n Searched for :\n");
+    for (size_t i = 0; i < criteria.in_size; i++)
+    {
+        printf("-- [%s] --\n", criteria.in[i]);
+    }
+
+    printf("\n And Not  :\n");
+    for (size_t i = 0; i < criteria.not_in_size; i++)
+    {
+        printf("-- [%s] --\n", criteria.not_in[i]);
+    }
 }
 
 void listFilesRecursively(char *basePath, search_criteria_t criteria)
 {
     char path[1000];
     struct dirent *dp;
-    int inodes[10000];
     int cpt = 0;
     struct stat res1;
-
+    Array inodes;
+    int i;
     DIR *dir = opendir(basePath);
-
+    initArray(&inodes, 100);
     // Unable to open directory stream
     if (!dir)
     {
         return;
     }
-        
 
     while ((dp = readdir(dir)) != NULL)
     {
 
         if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
         {
-           //printf("\n in the head %s/%s",basePath,dp->d_name);
-           char buff[1024];
-           sprintf(buff,"%s/%s",basePath,dp->d_name);
+            //printf("\n in the head %s/%s",basePath,dp->d_name);
+            char buff[1024];
+            sprintf(buff, "%s/%s", basePath, dp->d_name);
             if (testCriteria(buff, criteria) == 1)
             {
                 stat(dp->d_name, &res1);
                 if (existe(res1.st_ino, cpt, inodes) == 0)
                 {
                     printf("{ %s } satisfy the criteria ! \n", buff);
-                    inodes[cpt] = res1.st_ino;
+                    insertArray(&inodes, res1.st_ino);
+                    // inodes[cpt] = res1.st_ino;
                     cpt++;
                 }
             }
@@ -603,39 +617,73 @@ void listFilesRecursively(char *basePath, search_criteria_t criteria)
 
     closedir(dir);
 }
-int existe(int inode, int cpt, int tab[])
+int existe(int inode, int cpt, Array tab)
 {
     for (int i = 0; i < cpt; i++)
     {
-        if (tab[i] == inode)
+
+        if (tab.array[i] == inode)
         {
             return 1;
         }
     }
     return 0;
 }
-void red () {
+
+void initArray(Array *a, size_t initialSize)
+{
+    a->array = (int *)malloc(initialSize * sizeof(int));
+    a->used = 0;
+    a->size = initialSize;
+}
+
+void insertArray(Array *a, int element)
+{
+
+    if (a->used == a->size)
+    {
+        a->size *= 2;
+        a->array = (int *)realloc(a->array, a->size * sizeof(int));
+    }
+    a->array[a->used++] = element;
+}
+
+void freeArray(Array *a)
+{
+    free(a->array);
+    a->array = NULL;
+    a->used = a->size = 0;
+}
+void red()
+{
     printf("\033[1;31m");
 }
-void blue () {
+void blue()
+{
     printf("\033[0;34m");
 }
-void color1 () {
+void color1()
+{
     printf("\033[1;36m");
 }
-void color3 () {
+void color3()
+{
     printf("\033[0;35m");
 }
 
-void color2() {
+void color2()
+{
     printf("\033[1;32m");
 }
-void yellow() {
+void yellow()
+{
     printf("\033[1;33m");
 }
-void green(){
+void green()
+{
     printf("\033[0;32m");
 }
-void reset () {
+void reset()
+{
     printf("\033[0m");
 }

@@ -21,6 +21,13 @@ typedef struct
 
 typedef struct
 {
+    int *array;
+    size_t used;
+    size_t size;
+} Array;
+
+typedef struct
+{
     char **in;
     char **not_in;
     int in_size;
@@ -51,19 +58,19 @@ Tags *Allsoustags(char *Path, Tags *listcat);
 int testCriteria(char *Path, search_criteria_t criteria);
 void listFilesRecursively(char *basePath, search_criteria_t criteria);
 void low(char str[40]);
-Tags *lienEntreTags(char *Path,char *tag1,char *tag2);
-void lienhierarchique(char *Path,char *tag1,char *tag2);
-int existe(int inode, int cpt, int tab[]);
-void red () ;
-void blue () ;
-void color1 () ;
-void color3 ();
-void color2() ;
+Tags *lienEntreTags(char *Path, char *tag1, char *tag2);
+void lienhierarchique(char *Path, char *tag1, char *tag2);
+int existe(int inode, int cpt, Array tab);
+void initArray(Array *a, size_t initialSize);
+void insertArray(Array *a, int element);
+void freeArray(Array *a);
+void red();
+void blue();
+void color1();
+void color3();
+void color2();
 void yellow();
 void green();
-void reset ();
-
-
-
+void reset();
 
 #endif //SYSTPROJET_BIBLIO_H
