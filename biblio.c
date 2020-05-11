@@ -582,6 +582,7 @@ void listFilesRecursively(char *basePath, search_criteria_t criteria)
     // Unable to open directory stream
     if (!dir)
     {
+        freeArray(&inodes);
         return;
     }
 
