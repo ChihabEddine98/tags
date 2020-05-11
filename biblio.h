@@ -6,9 +6,6 @@
 #define SYSTPROJET_BIBLIO_H
 #define MAXLEN 256
 
-#include <glib-2.0/glib.h>
-#include <gmodule.h>
-
 ///  ------------------- project structure ----------------------
 typedef struct
 {
@@ -22,7 +19,12 @@ typedef struct
     int NbTags;
 } Tags;
 
-GArray *inodes;
+typedef struct
+{
+    int *array;
+    size_t used;
+    size_t size;
+} Array;
 
 typedef struct
 {
@@ -58,7 +60,10 @@ void listFilesRecursively(char *basePath, search_criteria_t criteria);
 void low(char str[40]);
 Tags *lienEntreTags(char *Path, char *tag1, char *tag2);
 void lienhierarchique(char *Path, char *tag1, char *tag2);
-int existe(int inode, int cpt);
+int existe(int inode, int cpt, Array tab);
+void initArray(Array *a, size_t initialSize);
+void insertArray(Array *a, int element);
+void freeArray(Array *a);
 void red();
 void blue();
 void color1();

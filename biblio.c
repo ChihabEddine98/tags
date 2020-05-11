@@ -573,12 +573,12 @@ void listFilesRecursively(char *basePath, search_criteria_t criteria)
 {
     char path[1000];
     struct dirent *dp;
-    int inodes[10000];
     int cpt = 0;
     struct stat res1;
-
+    Array inodes;
+    int i;
     DIR *dir = opendir(basePath);
-
+    initArray(&inodes, 100);
     // Unable to open directory stream
     if (!dir)
     {
@@ -596,11 +596,10 @@ void listFilesRecursively(char *basePath, search_criteria_t criteria)
             if (testCriteria(buff, criteria) == 1)
             {
                 stat(dp->d_name, &res1);
-                if (existe(res1.st_ino, cpt) == 0)
+                if (existe(res1.st_ino, cpt, inodes) == 0)
                 {
                     printf("{ %s } satisfy the criteria ! \n", buff);
-                    g_array_insert_val(inodes, cpt, res1.st_ino);
-
+                    insertArray(&inodes, res1.st_ino);
                     // inodes[cpt] = res1.st_ino;
                     cpt++;
                 }
@@ -618,18 +617,42 @@ void listFilesRecursively(char *basePath, search_criteria_t criteria)
 
     closedir(dir);
 }
-int existe(int inode, int cpt)
+int existe(int inode, int cpt, Array tab)
 {
     for (int i = 0; i < cpt; i++)
     {
-        int tabNode = g_array_index(inodes, int, i);
 
-        if (tabNode == inode)
+        if (tab.array[i] == inode)
         {
             return 1;
         }
     }
     return 0;
+}
+
+void initArray(Array *a, size_t initialSize)
+{
+    a->array = (int *)malloc(initialSize * sizeof(int));
+    a->used = 0;
+    a->size = initialSize;
+}
+
+void insertArray(Array *a, int element)
+{
+
+    if (a->used == a->size)
+    {
+        a->size *= 2;
+        a->array = (int *)realloc(a->array, a->size * sizeof(int));
+    }
+    a->array[a->used++] = element;
+}
+
+void freeArray(Array *a)
+{
+    free(a->array);
+    a->array = NULL;
+    a->used = a->size = 0;
 }
 void red()
 {
