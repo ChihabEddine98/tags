@@ -237,7 +237,7 @@ Lorsqu'on déplace un fichier avec 'mv', le fichier garde ses tags
 ### La commande ```cp```:
 Pour copier un fichier avec la commande 'cp', si on veut garder les memes tags, on doit rajouter le flag ```--preserve=xattr``` à notre commande.
 ##### exemple : 
-````` cp --preserve=xattr file file_cp ```
+``` cp --preserve=xattr file file_cp ```
 
 ### La commande ```rm```:
 La commande 'rm' supprime le fichier, donc il n'apparaitra plus lors de la recherche.
