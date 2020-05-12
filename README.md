@@ -15,12 +15,12 @@ Le projet de L3 programmation systèmes **Tags** réalisé en trinome :
 
 ---
 # Pour la première fois ! 
-Le projet est accompagné d'un `MakeFile` donc un petit `make` dans le répertoire du projet permettra de lancer le projet  mais plusieurs maniérés d'utilisation sont possibles et ce sont bien détaillés ci dessous : 
+Le projet est accompagné d'un `MakeFile` donc un petit `make` dans le répertoire du projet permettra de compiler le projet.Plusieurs maniéres d'utilisation sont possibles et nous les avons bien détaillés ci dessous : 
  
 ## Mode D'emploi  :
  Apres le **`make`**  un exécutable appelé  **`tags`**   est généré qui permet donc le test du projet !
 ### Option 1 : **` ./tags -options[Value] --flags FILE_PATH `**
-Dans cette méthode si vous lancez **`./tags`** en lui donnant des option en argument ( d'autres termes pareil qu'une commande du shell ) et donc les différentes options sont :
+Dans cette méthode si vous lancez **`./tags`** en lui donnant des option en argument (pareil qu'une commande du shell). et voici donc les différentes options :
 
   |   Option     |Flags|Arguments| Description|
 |-------------------|----------------|-----------------------------|-------|
@@ -45,15 +45,16 @@ Les deux exemples sont équivalents ! donc n'oubliez pas le petit **`=`** apres 
 ##### Exemple de recherche :
 **`./tags -s  "Color et non(Red) et Education et pas(L3)"`**
 ---
-cette exécution nous retourne les fichiers dont ils satisfont le critère donné à partir du répertoire courant ! 
+cette exécution nous retourne les fichiers du répertoire courant satisfaisant les critères demandés.
 
 
 
-Pour pouvoir créer un nouveau tag il faut lui donner son tag parent **`CATEGORY`** donc deux alternatives sont à votre disposition : 
-soit vous créez la `CATEGORY` avant de lui ajouter le `TAG` en question ou bien au moment de l'ajout d'un `TAG` répondre qu dialogue sur le terminal par le nom de la catégorie que vous voulez !
+Pour pouvoir créer un nouveau tag, il faut lui donner son tag parent **`CATEGORY`** donc deux alternatives sont à votre disposition : 
+soit vous créez la `CATEGORY` avant de lui ajouter le `TAG` en question, ou bien, au moment de l'ajout d'un `TAG` vous spécifierez la catégorie directement dans le terminal !
 
 Afin de supprimer un tag il est possible soit de donner le nom du tag `./tags -d "TAG" FILE_PATH`
- ou aussi vous pouvez : `./tags -d "TAG" -c "CATEGORY" `
+
+ ou aussi vous pouvez le faire cia la commande : `./tags -d "TAG" -c "CATEGORY" `
 
 ### Pas de panique  !
 Si les options et choix de la commande **`./tags`** sont compliqués et dur à retenir il serait toujours possible de demander de l'aide à notre ami **`./tags --help `** 
@@ -62,9 +63,10 @@ Si les options et choix de la commande **`./tags`** sont compliqués et dur à r
 
 ### Option 2 : **`./tags`**
 Dans cette méthode si vous lancez **`./tags`** sans lui donner d'option ! 
-un petit menu s'affichera vous indiquant tout les choix à votre disposition 
+un petit menu s'affichera vous indiquant tous les choix à votre disposition 
 
 # Comment on a fait !
+Nous avons choisit de sauvegarder les tags dans les fichiers à l'aide de XATTR (Extended Attributes).
 ### Structures utilsées :
 Dans notre implémentation, on a choisi de stocker les tags dans des catégories, par défaut la catégorie d'un tag c'est le tag lui meme.
 la liste des tags est une chaine de caractere contenant des mots séparés par des '#'.
@@ -228,4 +230,24 @@ Tags  *lienEntreTags(char  *Path,char  *tag1,char  *tag2);
 ```c
 void lienhierarchique(char  *Path,char  *tag1,char  *tag2);
 ```
+#compatibilité avec le SGF :
+### La commande ```mv```:
+Lorsqu'on déplace un fichier avec 'mv', le fichier garde ses tags
+
+### La commande ```cp```:
+Pour copier un fichier avec la commande 'cp', si on veut garder les memes tags, on doit rajouter le flag ```--preserve=xattr``` à notre commande.
+##### exemple : 
+````` cp --preserve=xattr file file_cp ```
+
+### La commande ```rm```:
+La commande 'rm' supprime le fichier, donc il n'apparaitra plus lors de la recherche.
+
+### Gestion des liens physiques et symboliques :
+##### liens physiques : 
+Si on crée un lien physiques à partir d'un fichier contenant des tags, le lien contiendra, lui aussi, les memes tags.
+Si un fichier contient plusieurs liens physiques, on a fait en sorte qu'il n'apparait qu'une fois lors de la recherche, et ce via une comparaison du numéro d'inoeud de chaque fichier.
+
+#### liens symboliques : 
+Pareil que les liens physques. Si on veut taguer un lien symbolique sans pour autant taguer le fichier sur lequel il pointe, on doit remplacer la fonction ```setxattr``` dans notre code par ```lsetxattr```
+
 
