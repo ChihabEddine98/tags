@@ -230,7 +230,7 @@ Tags  *lienEntreTags(char  *Path,char  *tag1,char  *tag2);
 ```c
 void lienhierarchique(char  *Path,char  *tag1,char  *tag2);
 ```
-#compatibilité avec le SGF :
+# compatibilité avec le SGF :
 ### La commande ```mv```:
 Lorsqu'on déplace un fichier avec 'mv', le fichier garde ses tags
 
@@ -249,5 +249,17 @@ Si un fichier contient plusieurs liens physiques, on a fait en sorte qu'il n'app
 
 #### liens symboliques : 
 Pareil que les liens physques. Si on veut taguer un lien symbolique sans pour autant taguer le fichier sur lequel il pointe, on doit remplacer la fonction ```setxattr``` dans notre code par ```lsetxattr```
+
+### Liens hierarchique entre 2 tags : 
+Pour spécifier le lien hierarchique entre deux tags, il suffit de choisir l'option 6 du menu, et de donner le nom des tags.
+Pour ca on fait appel aux 2 fonctions suivantes : 
+
+```c
+void lienhierarchique(char *Path, char *tag1, char *tag2)
+
+```
+```c
+Tags *lienEntreTags(char *Path, char *tag1, char *tag2)
+```
 
 
