@@ -148,7 +148,7 @@ search_criteria_t tokenize( char **result, char *working, const char *src, const
     }
      for (k = 0;k < cpt;k++)
      {
-         printf("\n K=[%s]",result[k]);
+         //printf("\n K=[%s]",result[k]);
 
 
        if(strstr(result[k],"Non") || strstr(result[k],"NON")|| strstr(result[k],"non")
@@ -188,33 +188,45 @@ search_criteria_t tokenize( char **result, char *working, const char *src, const
 
 void printCriteriaT(search_criteria_t criteria)
 {
-  printf("\n Searched for :\n");
-  for (size_t i = 0; i < criteria.in_size; i++)
+  if(criteria.in_size)
   {
-    printf("-- %s --\n",criteria.in[i]);
+    printf("\n Searched for :\n");
+    for (size_t i = 0; i < criteria.in_size; i++)
+    {
+      printf("-- %s --\n",criteria.in[i]);
+    }
   }
   
-  printf("\n And Not  :\n");
-  for (size_t i = 0; i < criteria.not_in_size; i++)
+  if(criteria.not_in_size)
   {
-    printf("-- %s --\n",criteria.not_in[i]);
+    printf("\n And Not  :\n");
+    for (size_t i = 0; i < criteria.not_in_size; i++)
+    {
+      printf("-- %s --\n\n",criteria.not_in[i]);
+    }
   }
+
+  
+
 }
 
   
 void menu()
 {
-      char fichier[85];
+    char fichier[85];
     char catName[45];
     char tagNAme[45];
     char tagNAme2[45];
-    color3();
-    printf("\n\n\t\tSysteme project - Best place to learn\n\n\n");
+
     int choice, num, i;
     char ch;
     char ch1[3];
+  
     while(1)
     {
+        system("clear");
+        yellow();
+        printf("\n\n\t\tSystem project - Best place to learn\n\n\n");
         color1();
         printf("\n1. ajouter catégorie  \n");
         printf("2. ajouter tag dans catégorie\n");
@@ -317,7 +329,7 @@ void menu()
                 break;
 
             case 8:
-                blue();
+                green();
                 printf("\n\n\t\t\tCoding is Fun !\n\n\n");
                 exit(0);    // terminates the complete program execution
             default:
