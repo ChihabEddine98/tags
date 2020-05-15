@@ -164,9 +164,9 @@ int findInList(Tags *tags, char *tagName)
     Token *token = tags->sommet;
     while (token != NULL)
     {
-       // printf(" \n token : [%s]  ",token->tag);
-       // printf(" \n tagName : [%s]  ",tagName);
-       // printf(" \n memCmp : %d ",memcmp(token->tag, tagName,strlen(token->tag)));
+        //  printf(" \n token : [%s]  ",token->tag);
+        // printf(" \n tagName : [%s]  ",tagName);
+        // printf(" \n memCmp : %d ",memcmp(token->tag, tagName,strlen(token->tag)));
 
         if (memcmp(token->tag, tagName, strlen(token->tag)) == 0)
             return 1;
@@ -453,22 +453,17 @@ int testCriteria(char *Path, search_criteria_t criteria)
         return 0;
     Tags *listall = Allsoustags(Path, listcat);
 
-    //printf(" \n  name %s\n",Path);
+    // printf(" \n  name %s\n",Path);
     for (size_t i = 0; i < criteria.in_size; i++)
     {
         if (findInList(listall, criteria.in[i]) == 0)
             return 0;
     }
-    //printf(" \n  Haaaaa \n");
 
     for (size_t j = 0; j < criteria.not_in_size; j++)
     {
         if (findInList(listall, criteria.not_in[j]) == 1)
-        {
-            //printf(" \n  D5aaal  \n");
             return 0;
-        }
-                 
     }
 
     return 1;
@@ -580,14 +575,11 @@ void listFilesRecursively(char *basePath, search_criteria_t criteria)
     struct dirent *dp;
     int cpt = 0;
     struct stat res1;
-    Array inodes;
     int i;
     DIR *dir = opendir(basePath);
-    initArray(&inodes, 100);
     // Unable to open directory stream
     if (!dir)
     {
-        freeArray(&inodes);
         return;
     }
 
@@ -601,13 +593,13 @@ void listFilesRecursively(char *basePath, search_criteria_t criteria)
             sprintf(buff, "%s/%s", basePath, dp->d_name);
             if (testCriteria(buff, criteria) == 1)
             {
-                stat(dp->d_name, &res1);
-                printf("{ %s } satisfy the criteria ! \n", buff);
 
+                stat(buff, &res1);
                 if (existe(res1.st_ino, cpt, inodes) == 0)
                 {
+                    printf("{ %s } satisfy the criteria ! \n", buff);
                     insertArray(&inodes, res1.st_ino);
-                    // inodes[cpt] = res1.st_ino;
+                    // inodes[cpt] = res1.st_ino;s
                     cpt++;
                 }
             }

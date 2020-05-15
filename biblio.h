@@ -34,6 +34,7 @@ typedef struct
     int not_in_size;
 
 } search_criteria_t;
+Array inodes;
 
 /// -------------------------------------------------------------
 
@@ -74,3 +75,4 @@ void green();
 void reset();
 
 #endif //SYSTPROJET_BIBLIO_H
+
