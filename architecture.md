@@ -97,72 +97,42 @@ struct  arguments
 }
 ```
 ---
+#### Algos utilisés pour la recherche selon les tags :
+```c
+search_criteria_t  tokenize(char  **result,  char  *working,  const  char  *src,  const  char  *delim)
+```
+Cette fonction prend en paramètre le critère de recherche que l'utilisateur a tapé comme par exemple : 
+**`./tags -s "Color et non(Yellow) et Diderot et pas(M2)"`**
+dans ce cas cette fonction prend le **`working="Color et non(Yellow) et Diderot et pas(M2)"`** et nous produit une structure  `search_criteria_t` remplie comme ci dessous :
+```c
+struct search_criteria
+{	
+	char **in=;  // ["Color","Diderot"]
+	char **not_in; // ["Yellow","M2"]
+	int in_size;   // 2
+	int not_in_size;  // 2
+}
+```
+Pour pouvoir distinguer les deux champs principaux de cette recherche ( négation ou pas )  la fonction suivante nous rend un grand service !
+```c
+char  *str_splitBetweenParentheses(char  *a_str,  const  char  a_delim)
+```
+Puisque cette fonction permet de prendre tout ce qui est entre les indicateurs de présence d'une négation et puis le mettre dans la champs dédié dans la structure 
 
-# Algos implementés :
-**DETAILS BY MEHDI & ME & AYMEN**
+Apres la partie de **parsing** il est temps de rechercher !
+notre idée principale içi c'est de faire un parcours récursive dans les répertoires qu'on rencontre et pour chaque fichier on teste si'il est tagé et si c'est le cas voir tout ses sous tags à l'aide de la fonction :
 ```c
-void init_tags(Tags  *tags, char  buf[MAXLEN]);
+Tags *Allsoustags(char  *Path, Tags *listcat);
 ```
+Et puis il suffit de tester si notre fichier satisfait la **`criteria`** demandée
 ```c
-void add(Tags  *tags, char  *tagName);
+int  testCriteria(char  *Path, search_criteria_t criteria);
 ```
+Et donc pour pouvoir tout tester il suffit de refaire ceci récursivement et on teste si ça vérifie la condition un petit `printf` fera l'affaire d'informer avec les fichiers visées par la **`criteria`**
 ```c
-void deletTag(Tags  *tags, char  *tagName);
+void  listFilesRecursively(char  *basePath, search_criteria_t criteria);
 ```
-```c
-void set_tags(char  *Path, char  data[MAXLEN], char  *tagName, int rep);
-```
-```c
-void get_tags(Tags  *tags, char  *Path, char  *tagName);
-```
-```c
-void ListOfTags(Tags  *tableau, char  buff[MAXLEN], int  size);
-```
-```c
-int findInList(Tags  *tags, char  *tagName);
-```
-```c
-void addCategorie(char  *Path, char  *tagName);
-```
-```c
-void addTagInCategorie(char  *Path, char  *category, char  *tagName);
-```
-```c
-void supprimerCategorie(char  *Path, char  *category);
-```
-```c
-void removeTagCategory(char  *Path, char  *category, char  *tagName);
-```
-```c
-void afficher(Tags  *tags);
-```
-```c
-void listTag(char  *Path);
-```
-```c
-void removeTag(char  *Path, char  *tagName);
-```
-```c
-int contientTag(char  *Path, char  *tag);
-```
-```c
-Tags  *Allsoustags(char  *Path, Tags  *listcat);
-```
-```c
-int testCriteria(char  *Path, search_criteria_t criteria);
-```
-```c
-void listFilesRecursively(char  *basePath, search_criteria_t criteria);
-```
-```c
-void low(char  str[40]);
-```
-```c
-Tags  *lienEntreTags(char  *Path,char  *tag1,char  *tag2);
-```
-```c
-void lienhierarchique(char  *Path,char  *tag1,char  *tag2);
-```
+---
 # compatibilité avec le SGF :
 ### La commande ```mv```:
 Lorsqu'on déplace un fichier avec 'mv', le fichier garde ses tags
