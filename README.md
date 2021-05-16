@@ -232,3 +232,7 @@ void lienhierarchique(char *Path, char *tag1, char *tag2)
 ```c
 Tags *lienEntreTags(char *Path, char *tag1, char *tag2)
 ```
+
+## TODO 
+---
+1. Docs to english
