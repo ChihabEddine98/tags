@@ -1,4 +1,4 @@
-# Projet Système L3 "tags"
+# Projet Système L3 "Tags"
 
 ## Gestion de Tags sous unix (Ubuntu 18.4) 
 Le projet de L3 programmation systèmes **Tags** réalisé en trinome : 
