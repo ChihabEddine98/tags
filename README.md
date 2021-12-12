@@ -9,7 +9,7 @@ Le projet de L3 programmation systèmes **Tags** réalisé en trinome :
   
   |   Nom & Prénoms |N_Etudiant| ID_Gitlab | Groupe |
 |----------------|-------------------------------|-----------------------------|-------|
-|Benamara Abdelkader Chihab | `-- ####### --` | `benamara` |    Maths-Info     |
+|Benamara Chihab | `-- ####### --` | `benamara` |    Maths-Info     |
 |Aknoun Mehdi | `-- ####### --` | `aknoun` |      Info4  |
 |Djelid Aymen | `-- ####### --` | `djelid` |  Info4 |
 
