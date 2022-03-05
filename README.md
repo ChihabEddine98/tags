@@ -237,4 +237,4 @@ Tags *lienEntreTags(char *Path, char *tag1, char *tag2)
 ---
 1. Docs to english
 2. Optim Code
-3. use threads
+3. use pthreads
