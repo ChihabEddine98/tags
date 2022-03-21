@@ -4,7 +4,7 @@
 Le projet de L3 programmation systèmes **Tags** réalisé en trinome : 
 
 
-## Par :
+## Authors :
 
   
   |   Nom & Prénoms |N_Etudiant| ID_Gitlab | Groupe |
