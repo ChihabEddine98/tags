@@ -235,7 +235,7 @@ Tags *lienEntreTags(char *Path, char *tag1, char *tag2)
 
 ## TODO 
 ---
-1. Docs to en
+1. Docs to an
 2. Optim Code
 3. use --pthreads niem
 4. Ub 20.4
